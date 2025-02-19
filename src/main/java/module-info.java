@@ -6,4 +6,7 @@ module com.seeg2.logicable {
 
     opens com.seeg2.logicable to javafx.fxml;
     exports com.seeg2.logicable;
+    exports com.seeg2.logicable.controller;
+    exports com.seeg2.logicable.logger;
+    opens com.seeg2.logicable.controller to javafx.fxml;
 }

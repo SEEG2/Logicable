@@ -1,4 +1,4 @@
-package com.seeg2.logicable.LogicGate;
+package com.seeg2.logicable.logicGate;
 
 public class ValueProvider extends LogicGate {
     public boolean VALUE;

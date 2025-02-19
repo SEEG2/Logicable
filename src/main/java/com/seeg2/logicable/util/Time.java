@@ -1,4 +1,4 @@
-package com.seeg2.logicable.Util;
+package com.seeg2.logicable.util;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

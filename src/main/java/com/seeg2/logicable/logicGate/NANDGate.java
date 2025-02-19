@@ -1,4 +1,4 @@
-package com.seeg2.logicable.LogicGate;
+package com.seeg2.logicable.logicGate;
 
 public class NANDGate extends LogicGate {
     public LogicGate INPUT1;

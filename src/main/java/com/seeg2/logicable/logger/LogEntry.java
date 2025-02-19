@@ -1,6 +1,6 @@
-package com.seeg2.logicable.Logger;
+package com.seeg2.logicable.logger;
 
-import com.seeg2.logicable.Util.Time;
+import com.seeg2.logicable.util.Time;
 
 public class LogEntry {
     private String time;
@@ -21,6 +21,8 @@ public class LogEntry {
         this.type = type;
         this.time = Time.zonedDateTimeHHMMSS();
         this.sysTimeMS = System.currentTimeMillis();
+
+        Logger.notifyListeners(this);
     }
 
     public String getText() {
