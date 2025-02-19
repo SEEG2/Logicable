@@ -29,7 +29,7 @@
          <buttons>
              <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
                  <image>
-                     <Image url="@../../../images/logic_gates/NXOR.png" />
+                     <Image url="@../../../images/logic_gates/XNOR.png" />
                  </image>
              </ImageView>
              <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
