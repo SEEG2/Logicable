@@ -10,7 +10,12 @@ public class MainController {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(Application.GIT_HUB_PAGE_LINK));
         } catch (Exception e) {
-            Logger.error("Could not open about link.");
+            Logger.error("Could not open About-link.");
         }
+    }
+
+    @FXML
+    public void onCloseClicked() {
+        Application.close();
     }
 }
