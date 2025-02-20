@@ -27,27 +27,27 @@
       </MenuBar>
       <ButtonBar fx:id="bottomBar" layoutY="540.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="58.0" prefWidth="960.0" style="-fx-background-color: #BBBBBB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <buttons>
-             <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#XNORClicked" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@../../../images/logic_gates/XNOR.png" />
                  </image>
              </ImageView>
-             <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#XORClicked" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@../../../images/logic_gates/XOR.png" />
                  </image>
              </ImageView>
-             <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#NORClicked" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@../../../images/logic_gates/NOR.png" />
                  </image>
              </ImageView>
-             <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#ORClicked" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@../../../images/logic_gates/OR.png" />
                  </image>
              </ImageView>
-            <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#NANDClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/logic_gates/NAND.png" />
                </image>
@@ -57,7 +57,7 @@
                   <Image url="@../../../images/logic_gates/AND.png" />
                </image>
             </ImageView>
-             <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#NOTClicked" pickOnBounds="true" preserveRatio="true">
                  <image>
                      <Image url="@../../../images/logic_gates/NOT.png" />
                  </image>

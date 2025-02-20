@@ -2,6 +2,7 @@ package com.seeg2.logicable.controller;
 
 import com.seeg2.logicable.Application;
 import com.seeg2.logicable.logger.Logger;
+import com.seeg2.logicable.simulationElement.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import com.seeg2.logicable.simulationElement.ANDElement;
-import com.seeg2.logicable.simulationElement.SimulationElement;
 
 import java.io.IOException;
 import java.net.URI;
@@ -55,11 +54,65 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void NOTClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new NOTElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
     public void ANDClicked() {
         if (payload != null) {
             payload.remove();
         }
         payload = new ANDElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
+    public void NANDClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new NANDElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
+    public void ORClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new ORElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
+    public void NORClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new NORElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
+    public void XORClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new XORElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
+    public void XNORClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new XNORElement(screen);
         payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
     }
 
