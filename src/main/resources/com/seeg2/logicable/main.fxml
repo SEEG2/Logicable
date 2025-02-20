@@ -4,28 +4,28 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seeg2.logicable.controller.MainController">
+<AnchorPane fx:id="screen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#screenClicked" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #DDDDDD;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.seeg2.logicable.controller.MainController">
    <children>
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onCloseClicked" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onShowLogClicked" text="Show Log" />
+              <MenuItem mnemonicParsing="false" onAction="#showLogClicked" text="Show Log" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onAboutClicked" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#aboutClicked" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <ButtonBar layoutY="540.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="58.0" prefWidth="960.0" style="-fx-background-color: #BBBBBB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <ButtonBar fx:id="bottomBar" layoutY="540.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="58.0" prefWidth="960.0" style="-fx-background-color: #BBBBBB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <buttons>
              <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
                  <image>
@@ -52,7 +52,7 @@
                   <Image url="@../../../images/logic_gates/NAND.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="71.0" fitWidth="86.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#ANDClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/logic_gates/AND.png" />
                </image>
