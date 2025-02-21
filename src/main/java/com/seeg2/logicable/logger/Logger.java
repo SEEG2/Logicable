@@ -40,6 +40,10 @@ public class Logger {
         return text.toString();
     }
 
+    public static ArrayList<LogEntry> getLogEntries() {
+        return logEntries;
+    }
+
     public static void clear() {
         logEntries.clear();
     }
@@ -55,6 +59,22 @@ public class Logger {
     public static void notifyListeners(LogEntry logEntry) {
         for (LogEventListener listener : listeners) {
             listener.onLogEntryAdded(logEntry);
+        }
+    }
+
+    public static String getColorForEntry(LogEntry logEntry) {
+        switch (logEntry.getType()) {
+            default -> {
+                return "#000000";
+            } case DEBUG -> {
+                return "#7b26a3";
+            } case WARNING -> {
+                return "#ffdd00";
+            } case ERROR -> {
+                return "#ff0000";
+            } case CRITICAL -> {
+                return "#780c00";
+            }
         }
     }
 }

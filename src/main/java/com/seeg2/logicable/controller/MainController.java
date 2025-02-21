@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private SimulationElement payload;
-    private final ArrayList<SimulationElement> simulationElements = new ArrayList<>();
+    private static SimulationElement payload;
+    private final static ArrayList<SimulationElement> simulationElements = new ArrayList<>();
     private double mouseX, mouseY;
     @FXML
     public AnchorPane screen;
@@ -125,7 +125,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public void removeSimulationElement(SimulationElement element) {
+    public static void removeSimulationElement(SimulationElement element) {
         simulationElements.remove(element);
         element.remove();
     }

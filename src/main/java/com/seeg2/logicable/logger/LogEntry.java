@@ -28,4 +28,7 @@ public class LogEntry {
     public String getText() {
         return "[" + time + "] " + message;
     }
+    public LogEntryType getType() {
+        return type;
+    }
 }
