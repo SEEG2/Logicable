@@ -20,9 +20,10 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private static SimulationElement payload;
     private final static ArrayList<SimulationElement> simulationElements = new ArrayList<>();
-    private double mouseX, mouseY;
+    private static SimulationElement selectedElement;
     @FXML
     public AnchorPane screen;
+    private double mouseX, mouseY;
     @FXML
     public ButtonBar bottomBar;
 
@@ -121,7 +122,11 @@ public class MainController implements Initializable {
         if (payload != null) {
             simulationElements.add(payload);
             payload.SPRITE.toBack();
+            payload.setActive();
             payload = null;
+        }
+        if (selectedElement != null) {
+            selectedElement.deselect();
         }
     }
 
@@ -140,5 +145,19 @@ public class MainController implements Initializable {
                 payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
             }
         });
+    }
+
+    public static void selectSimulationElement(SimulationElement element) {
+        if (selectedElement != null) {
+            selectedElement.deselect();
+        }
+
+        if (selectedElement == element) {
+            selectedElement = null;
+            return;
+        }
+
+        selectedElement = element;
+        element.select();
     }
 }

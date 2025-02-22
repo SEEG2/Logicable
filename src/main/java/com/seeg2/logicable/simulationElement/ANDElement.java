@@ -21,6 +21,7 @@ public class ANDElement extends SimulationElement {
             Logger.error("Failed to load AND-sprite");
         }
 
+        this.
         initSprite();
     }
 }

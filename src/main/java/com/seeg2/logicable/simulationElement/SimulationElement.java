@@ -1,5 +1,6 @@
 package com.seeg2.logicable.simulationElement;
 
+import com.seeg2.logicable.controller.MainController;
 import com.seeg2.logicable.logicGate.LogicGate;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.ColorAdjust;
@@ -11,6 +12,7 @@ public abstract class SimulationElement {
     public ImageView SPRITE;
     public LogicGate LOGIC_PROVIDER;
     protected final Pane screen;
+    protected boolean isActive;
 
     protected SimulationElement(Pane screen) {
         this.screen = screen;
@@ -39,12 +41,26 @@ public abstract class SimulationElement {
     }
 
     protected void initSprite() {
+        isActive = false;
         SPRITE.setPreserveRatio(true);
         SPRITE.setFitHeight(50);
         screen.getChildren().add(SPRITE);
+        SPRITE.setPickOnBounds(true);
+        SPRITE.setOnMouseClicked((action) -> {
+            if (!this.isActive) {
+                return;
+            }
+
+            MainController.selectSimulationElement(this);
+            action.consume();
+        });
     }
 
     public void remove() {
         screen.getChildren().remove(SPRITE);
+    }
+
+    public void setActive() {
+        isActive = true;
     }
 }
