@@ -19,8 +19,8 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     private static SimulationElement payload;
-    private final static ArrayList<SimulationElement> simulationElements = new ArrayList<>();
     private static SimulationElement selectedElement;
+    private final static ArrayList<SimulationElement> simulationElements = new ArrayList<>();
     @FXML
     public AnchorPane screen;
     private double mouseX, mouseY;
@@ -125,14 +125,26 @@ public class MainController implements Initializable {
             payload.setActive();
             payload = null;
         }
-        if (selectedElement != null) {
-            selectedElement.deselect();
+        if (selectedElement != null) {;
+            selectSimulationElement(null);
         }
     }
 
     public static void removeSimulationElement(SimulationElement element) {
         simulationElements.remove(element);
         element.remove();
+    }
+
+    public static void selectSimulationElement(SimulationElement element) {
+        if (element == selectedElement) {
+            return;
+        }
+
+        if (selectedElement != null) {
+            selectedElement.deselect();
+        }
+
+        selectedElement = element;
     }
 
     @Override
@@ -145,19 +157,5 @@ public class MainController implements Initializable {
                 payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
             }
         });
-    }
-
-    public static void selectSimulationElement(SimulationElement element) {
-        if (selectedElement != null) {
-            selectedElement.deselect();
-        }
-
-        if (selectedElement == element) {
-            selectedElement = null;
-            return;
-        }
-
-        selectedElement = element;
-        element.select();
     }
 }

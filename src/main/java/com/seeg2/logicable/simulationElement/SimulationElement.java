@@ -13,6 +13,8 @@ public abstract class SimulationElement {
     public LogicGate LOGIC_PROVIDER;
     protected final Pane screen;
     protected boolean isActive;
+    private double mouseX, mouseY;
+
 
     protected SimulationElement(Pane screen) {
         this.screen = screen;
@@ -29,6 +31,8 @@ public abstract class SimulationElement {
         blend.setBottomInput(new Glow(0.8d));
 
         SPRITE.setEffect(blend);
+
+        MainController.selectSimulationElement(this);
     }
 
     public void deselect() {
@@ -46,13 +50,35 @@ public abstract class SimulationElement {
         SPRITE.setFitHeight(50);
         screen.getChildren().add(SPRITE);
         SPRITE.setPickOnBounds(true);
+
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
                 return;
             }
 
-            MainController.selectSimulationElement(this);
+            select();
             action.consume();
+        });
+
+        SPRITE.setOnMousePressed(event -> {
+            if (!this.isActive) {
+                return;
+            }
+
+            mouseX = event.getSceneX() - SPRITE.getLayoutX();
+            mouseY = event.getSceneY() - SPRITE.getLayoutY();
+            event.consume();
+        });
+
+        SPRITE.setOnMouseDragged(event -> {
+            if (!this.isActive) {
+                return;
+            }
+
+            select();
+
+            setPosition(event.getSceneX() - mouseX, event.getSceneY() - mouseY);
+            event.consume();
         });
     }
 
