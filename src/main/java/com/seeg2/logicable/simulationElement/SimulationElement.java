@@ -67,6 +67,7 @@ public abstract class SimulationElement {
 
             mouseX = event.getSceneX() - SPRITE.getLayoutX();
             mouseY = event.getSceneY() - SPRITE.getLayoutY();
+
             event.consume();
         });
 

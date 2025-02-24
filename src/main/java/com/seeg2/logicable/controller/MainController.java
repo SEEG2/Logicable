@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -131,6 +133,10 @@ public class MainController implements Initializable {
     }
 
     public static void removeSimulationElement(SimulationElement element) {
+        if (selectedElement == element) {
+            selectedElement = null;
+        }
+
         simulationElements.remove(element);
         element.remove();
     }
@@ -143,9 +149,18 @@ public class MainController implements Initializable {
         if (selectedElement != null) {
             selectedElement.deselect();
         }
-
+        
         selectedElement = element;
     }
+
+    private void handleKeyPress(KeyEvent event) {
+        if (selectedElement != null) {
+            if (event.getCode() == KeyCode.DELETE || (event.getCode() == KeyCode.D && event.isControlDown())) {
+                removeSimulationElement(selectedElement);
+            }
+        }
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -156,6 +171,11 @@ public class MainController implements Initializable {
                 // Making sure that it doesn't hit the bottom-bar
                 payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
             }
+
+            // For some reason key presses are not registered if I do not manually call this (no idea why)
+            screen.requestFocus();
         });
+
+        screen.setOnKeyPressed(this::handleKeyPress);
     }
 }
