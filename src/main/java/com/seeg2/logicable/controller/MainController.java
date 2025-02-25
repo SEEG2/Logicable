@@ -57,6 +57,18 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void creditsClicked() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("credits.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 640, 360);
+        stage.setMinWidth(480);
+        stage.setMinHeight(270);
+        stage.setTitle("credits");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
     public void NOTClicked() {
         if (payload != null) {
             payload.remove();
