@@ -29,6 +29,23 @@ public class MainController implements Initializable {
     @FXML
     public ButtonBar bottomBar;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        screen.setOnMouseMoved(event -> {
+            mouseX = event.getX();
+            mouseY = event.getY();
+            if (payload != null) {
+                // Making sure that it doesn't hit the bottom-bar
+                payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+            }
+
+            // For some reason key presses are not registered if I do not manually call this (no idea why)
+            screen.requestFocus();
+        });
+
+        screen.setOnKeyPressed(this::handleKeyPress);
+    }
+
     @FXML
     public void aboutClicked() {
         try {
@@ -171,23 +188,5 @@ public class MainController implements Initializable {
                 removeSimulationElement(selectedElement);
             }
         }
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        screen.setOnMouseMoved(event -> {
-            mouseX = event.getX();
-            mouseY = event.getY();
-            if (payload != null) {
-                // Making sure that it doesn't hit the bottom-bar
-                payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
-            }
-
-            // For some reason key presses are not registered if I do not manually call this (no idea why)
-            screen.requestFocus();
-        });
-
-        screen.setOnKeyPressed(this::handleKeyPress);
     }
 }
