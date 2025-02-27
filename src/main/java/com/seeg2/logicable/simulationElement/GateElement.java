@@ -8,15 +8,16 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public abstract class SimulationElement {
+public abstract class GateElement {
     public ImageView SPRITE;
     public LogicGate LOGIC_PROVIDER;
+    protected ConnectionPoint input1, input2, output;
     protected final Pane screen;
     protected boolean isActive;
     private double mouseX, mouseY;
+    private float centerLineY, inputOffsetY;
 
-
-    protected SimulationElement(Pane screen) {
+    protected GateElement(Pane screen) {
         this.screen = screen;
     }
 
@@ -50,6 +51,15 @@ public abstract class SimulationElement {
         SPRITE.setFitHeight(50);
         screen.getChildren().add(SPRITE);
         SPRITE.setPickOnBounds(true);
+
+        centerLineY = (float) (SPRITE.getFitHeight() / 2f);
+
+        // Position of the connector relative to the center line. Based on the images used.
+        inputOffsetY = (float) (SPRITE.getFitHeight() / 3.7f);
+
+        input1 = new ConnectionPoint(screen, SPRITE, 0, centerLineY + inputOffsetY);
+        input2 = new ConnectionPoint(screen, SPRITE, 0, centerLineY - inputOffsetY);
+        output = new ConnectionPoint(screen, SPRITE, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {

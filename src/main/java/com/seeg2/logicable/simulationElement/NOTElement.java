@@ -1,14 +1,13 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.logger.Logger;
-import com.seeg2.logicable.logicGate.ANDGate;
 import com.seeg2.logicable.logicGate.NOTGate;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 
-public class NOTElement extends SimulationElement {
+public class NOTElement extends GateElement {
     public NOTElement(Pane screen) {
         super(screen);
         this.LOGIC_PROVIDER = new NOTGate();

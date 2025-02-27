@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 
-public class ORElement extends SimulationElement {
+public class ORElement extends GateElement {
     public ORElement(Pane screen) {
         super(screen);
         this.LOGIC_PROVIDER = new ORGate();

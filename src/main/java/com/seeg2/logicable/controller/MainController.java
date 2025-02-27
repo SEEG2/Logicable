@@ -20,17 +20,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private static SimulationElement payload;
-    private static SimulationElement selectedElement;
-    private final static ArrayList<SimulationElement> simulationElements = new ArrayList<>();
-    @FXML
-    public AnchorPane screen;
+    private static GateElement payload;
+    private static GateElement selectedElement;
+    private final static ArrayList<GateElement> simulationElements = new ArrayList<>();
     private double mouseX, mouseY;
+    public static MainController instance;
+    @FXML
+    private AnchorPane screen;
     @FXML
     public ButtonBar bottomBar;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        instance = this;
         screen.setOnMouseMoved(event -> {
             mouseX = event.getX();
             mouseY = event.getY();
@@ -161,7 +163,7 @@ public class MainController implements Initializable {
         }
     }
 
-    public static void removeSimulationElement(SimulationElement element) {
+    public static void removeSimulationElement(GateElement element) {
         if (selectedElement == element) {
             selectedElement = null;
         }
@@ -170,7 +172,7 @@ public class MainController implements Initializable {
         element.remove();
     }
 
-    public static void selectSimulationElement(SimulationElement element) {
+    public static void selectSimulationElement(GateElement element) {
         if (element == selectedElement) {
             return;
         }
