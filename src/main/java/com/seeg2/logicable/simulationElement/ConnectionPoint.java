@@ -29,7 +29,6 @@ public class ConnectionPoint {
         screen.getChildren().add(boundCircle);
     }
 
-
     public ConnectionPoint(Pane screen, ImageView root, float xOffset, float yOffset, boolean isInput) {
         this.screen = screen;
         this.root = root;

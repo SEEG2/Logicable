@@ -49,6 +49,15 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void clearScene() {
+        for (GateElement element : simulationElements) {
+            element.remove();
+        }
+
+        simulationElements.clear();
+    }
+
+    @FXML
     public void aboutClicked() {
         try {
             java.awt.Desktop.getDesktop().browse(new URI(Application.GIT_HUB_PAGE_LINK));
