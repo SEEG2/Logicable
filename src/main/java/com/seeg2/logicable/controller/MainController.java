@@ -23,8 +23,10 @@ public class MainController implements Initializable {
     private static GateElement payload;
     private static GateElement selectedElement;
     private final static ArrayList<GateElement> simulationElements = new ArrayList<>();
-    private double mouseX, mouseY;
+    private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     public static MainController instance;
+    private static ConnectionPoint pickedConnection;
+    private double mouseX, mouseY;
     @FXML
     private AnchorPane screen;
     @FXML
@@ -167,9 +169,12 @@ public class MainController implements Initializable {
             payload.setActive();
             payload = null;
         }
+
         if (selectedElement != null) {;
             selectSimulationElement(null);
         }
+
+        pickedConnection = null;
     }
 
     public static void removeSimulationElement(GateElement element) {
@@ -199,5 +204,40 @@ public class MainController implements Initializable {
                 removeSimulationElement(selectedElement);
             }
         }
+    }
+
+    public void setPickedConnection(ConnectionPoint connectionPoint) {
+        if (pickedConnection == null) {
+            pickedConnection = connectionPoint;
+            return;
+        }
+
+        if (connectionPoint.isInput() == pickedConnection.isInput()) {
+            pickedConnection = connectionPoint;
+            return;
+        }
+
+        if (pickedConnection.getRoot().equals(connectionPoint.getRoot())) {
+            pickedConnection = connectionPoint;
+            return;
+        }
+
+        if (pickedConnection.getConnection() != null) {
+            pickedConnection.removeConnection();
+        }
+
+        if (connectionPoint.getConnection() != null) {
+            connectionPoint.removeConnection();
+        }
+
+        ConnectionLine connection = new ConnectionLine(pickedConnection, connectionPoint, screen);
+        connections.add(connection);
+        pickedConnection.setConnection(connection);
+        connectionPoint.setConnection(connection);
+        pickedConnection = null;
+    }
+
+    public static ConnectionPoint getPickedConnection() {
+        return pickedConnection;
     }
 }

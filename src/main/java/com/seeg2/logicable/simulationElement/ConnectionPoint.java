@@ -1,5 +1,6 @@
 package com.seeg2.logicable.simulationElement;
 
+import com.seeg2.logicable.controller.MainController;
 import javafx.beans.binding.Bindings;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -13,6 +14,7 @@ public class ConnectionPoint {
     private Circle boundCircle;
     // true -> input; false -> output
     private boolean isInput;
+    private ConnectionLine connection;
 
     public ConnectionPoint(Pane screen, ImageView root, float xOffset, float yOffset) {
         this.screen = screen;
@@ -25,6 +27,11 @@ public class ConnectionPoint {
 
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
+
+        boundCircle.setOnMouseClicked((action) -> {
+            MainController.instance.setPickedConnection(this);
+            action.consume();
+        });
 
         screen.getChildren().add(boundCircle);
     }
@@ -41,10 +48,55 @@ public class ConnectionPoint {
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
 
+        boundCircle.setOnMouseClicked((action) -> {
+            MainController.instance.setPickedConnection(this);
+            action.consume();
+        });
+
         screen.getChildren().add(boundCircle);
     }
 
     public Circle getCircle() {
         return boundCircle;
+    }
+
+    public ConnectionLine getConnection() {
+        return connection;
+    }
+
+    public void setConnection(ConnectionLine connection) {
+        this.connection = connection;
+    }
+
+    public void update() {
+        if (connection != null) {
+            connection.updatePos();
+        }
+    }
+
+    public void remove() {
+        screen.getChildren().remove(boundCircle);
+
+        if (connection != null) {
+            connection.remove(this);
+        }
+    }
+
+    public void removeConnection() {
+        if (connection != null) {
+            connection.remove();
+        }
+    }
+
+    public boolean isInput() {
+        return isInput;
+    }
+
+    public ImageView getRoot() {
+        return root;
+    }
+
+    public void setRoot(ImageView root) {
+        this.root = root;
     }
 }

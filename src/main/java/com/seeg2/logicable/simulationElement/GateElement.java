@@ -2,14 +2,11 @@ package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
 import com.seeg2.logicable.logicGate.LogicGate;
-import javafx.scene.Node;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
-import java.awt.*;
 
 public abstract class GateElement {
     public ImageView SPRITE;
@@ -46,6 +43,10 @@ public abstract class GateElement {
     public void setPosition(double x, double y) {
         SPRITE.setLayoutX(x);
         SPRITE.setLayoutY(y);
+
+        input1.update();
+        input2.update();
+        output.update();
     }
 
     protected void initSprite() {
@@ -62,7 +63,7 @@ public abstract class GateElement {
 
         input1 = new ConnectionPoint(screen, SPRITE, 0, centerLineY + inputOffsetY);
         input2 = new ConnectionPoint(screen, SPRITE, 0, centerLineY - inputOffsetY);
-        output = new ConnectionPoint(screen, SPRITE, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY);
+        output = new ConnectionPoint(screen, SPRITE, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -98,9 +99,10 @@ public abstract class GateElement {
 
     public void remove() {
         screen.getChildren().remove(SPRITE);
-        screen.getChildren().remove(input1.getCircle());
-        screen.getChildren().remove(input2.getCircle());
-        screen.getChildren().remove(output.getCircle());
+
+        input1.remove();
+        input2.remove();
+        output.remove();
     }
 
     public void setActive() {
