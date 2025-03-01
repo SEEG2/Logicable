@@ -108,4 +108,17 @@ public abstract class GateElement {
     public void setActive() {
         isActive = true;
     }
+
+    public void showConnectionPoints() {
+        input1.show();
+        input2.show();
+        output.show();
+    }
+
+
+    public void hideConnectionPoints() {
+        input1.hide();
+        input2.hide();
+        output.hide();
+    }
 }

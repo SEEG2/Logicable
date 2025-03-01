@@ -12,7 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -27,6 +26,7 @@ public class MainController implements Initializable {
     public static MainController instance;
     private static ConnectionPoint pickedConnection;
     private double mouseX, mouseY;
+    private boolean isDebugMode;
     @FXML
     private AnchorPane screen;
     @FXML
@@ -175,6 +175,21 @@ public class MainController implements Initializable {
         }
 
         pickedConnection = null;
+    }
+
+    @FXML
+    public void toggleDebugMode() {
+        if (isDebugMode) {
+            for (GateElement element : simulationElements) {
+                element.hideConnectionPoints();
+            }
+        } else {
+            for (GateElement element : simulationElements) {
+                element.showConnectionPoints();
+            }
+        }
+
+        isDebugMode ^= true;
     }
 
     public static void removeSimulationElement(GateElement element) {

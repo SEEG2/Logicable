@@ -25,6 +25,7 @@ public class ConnectionPoint {
 
         boundCircle = new Circle(5, Color.RED);
 
+        this.hide();
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
 
@@ -45,6 +46,7 @@ public class ConnectionPoint {
 
         boundCircle = new Circle(5, Color.RED);
 
+        this.hide();
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
 
@@ -98,5 +100,14 @@ public class ConnectionPoint {
 
     public void setRoot(ImageView root) {
         this.root = root;
+    }
+
+    public void show() {
+        boundCircle.setOpacity(1);
+    }
+
+
+    public void hide() {
+        boundCircle.setOpacity(0);
     }
 }
