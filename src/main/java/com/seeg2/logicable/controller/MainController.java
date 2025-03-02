@@ -25,8 +25,9 @@ public class MainController implements Initializable {
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     public static MainController instance;
     private static ConnectionPoint pickedConnection;
+    private ConnectionLine connectionLineTemp;
     private double mouseX, mouseY;
-    private boolean isDebugMode;
+    private static boolean isDebugMode;
     @FXML
     private AnchorPane screen;
     @FXML
@@ -45,6 +46,11 @@ public class MainController implements Initializable {
 
             // For some reason key presses are not registered if I do not manually call this (no idea why)
             screen.requestFocus();
+
+            if (connectionLineTemp != null) {
+                // Slight offset here to fix click detection
+                connectionLineTemp.updatePos(mouseX-1, mouseY-1);
+            }
         });
 
         screen.setOnKeyPressed(this::handleKeyPress);
@@ -175,6 +181,11 @@ public class MainController implements Initializable {
         }
 
         pickedConnection = null;
+
+        if (connectionLineTemp != null) {
+            connectionLineTemp.remove();
+            connectionLineTemp = null;
+        }
     }
 
     @FXML
@@ -183,9 +194,15 @@ public class MainController implements Initializable {
             for (GateElement element : simulationElements) {
                 element.hideConnectionPoints();
             }
+            if (payload != null) {
+                payload.hideConnectionPoints();
+            }
         } else {
             for (GateElement element : simulationElements) {
                 element.showConnectionPoints();
+            }
+            if (payload != null) {
+                payload.showConnectionPoints();
             }
         }
 
@@ -224,16 +241,19 @@ public class MainController implements Initializable {
     public void setPickedConnection(ConnectionPoint connectionPoint) {
         if (pickedConnection == null) {
             pickedConnection = connectionPoint;
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
 
         if (connectionPoint.isInput() == pickedConnection.isInput()) {
             pickedConnection = connectionPoint;
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
 
         if (pickedConnection.getRoot().equals(connectionPoint.getRoot())) {
             pickedConnection = connectionPoint;
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
 
@@ -245,14 +265,20 @@ public class MainController implements Initializable {
             connectionPoint.removeConnection();
         }
 
-        ConnectionLine connection = new ConnectionLine(pickedConnection, connectionPoint, screen);
-        connections.add(connection);
-        pickedConnection.setConnection(connection);
-        connectionPoint.setConnection(connection);
+        connectionLineTemp.setDestination(connectionPoint);
+        connections.add(connectionLineTemp);
+        pickedConnection.setConnection(connectionLineTemp);
+        connectionPoint.setConnection(connectionLineTemp);
+        connectionLineTemp.updatePos();
+        connectionLineTemp = null;
         pickedConnection = null;
     }
 
     public static ConnectionPoint getPickedConnection() {
         return pickedConnection;
+    }
+
+    public static boolean isDebugMode() {
+        return isDebugMode;
     }
 }

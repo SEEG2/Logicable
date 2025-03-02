@@ -26,7 +26,7 @@ public class ConnectionLine {
         horizontalLine.setStroke(Color.web("#414a54"));
         horizontalLine.setStrokeLineCap(StrokeLineCap.ROUND);
 
-        updatePos();
+        //updatePos();
 
         this.screen = screen;
         screen.getChildren().addAll(verticalLine, horizontalLine);
@@ -49,6 +49,21 @@ public class ConnectionLine {
         horizontalLine.setEndY(endY);
     }
 
+    public void updatePos(double destinationX, double destinationY) {
+        double startX = source.getCircle().getCenterX();
+        double startY = source.getCircle().getCenterY();
+
+        verticalLine.setStartX(startX);
+        verticalLine.setStartY(startY);
+        verticalLine.setEndX(startX);
+        verticalLine.setEndY(destinationY);
+
+        horizontalLine.setStartX(startX);
+        horizontalLine.setStartY(destinationY);
+        horizontalLine.setEndX(destinationX);
+        horizontalLine.setEndY(destinationY);
+    }
+
     public void remove(ConnectionPoint connectionPoint) {
         if (connectionPoint == source) {
             destination.setConnection(null);
@@ -60,10 +75,18 @@ public class ConnectionLine {
         screen.getChildren().remove(horizontalLine);
     }
 
+    public void setDestination(ConnectionPoint destination) {
+        this.destination = destination;
+    }
 
     public void remove() {
-        source.setConnection(null);
-        destination.setConnection(null);
+        if (source != null) {
+            source.setConnection(null);
+        }
+
+        if (destination != null) {
+            destination.setConnection(null);
+        }
 
         screen.getChildren().remove(verticalLine);
         screen.getChildren().remove(horizontalLine);

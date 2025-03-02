@@ -25,7 +25,10 @@ public class ConnectionPoint {
 
         boundCircle = new Circle(5, Color.RED);
 
-        this.hide();
+        if (!MainController.isDebugMode()) {
+            this.hide();
+        }
+
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
 
@@ -46,7 +49,10 @@ public class ConnectionPoint {
 
         boundCircle = new Circle(5, Color.RED);
 
-        this.hide();
+        if (!MainController.isDebugMode()) {
+            this.hide();
+        }
+
         boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
         boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
 

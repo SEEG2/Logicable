@@ -59,7 +59,7 @@ public abstract class GateElement {
         centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
         // Position of the connector relative to the center line. Based on the images used.
-        inputOffsetY = (float) (SPRITE.getFitHeight() / 3.7f);
+        inputOffsetY = (float) (SPRITE.getFitHeight() / 3.6f);
 
         input1 = new ConnectionPoint(screen, SPRITE, 0, centerLineY + inputOffsetY);
         input2 = new ConnectionPoint(screen, SPRITE, 0, centerLineY - inputOffsetY);
