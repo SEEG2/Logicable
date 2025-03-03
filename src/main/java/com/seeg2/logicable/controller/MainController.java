@@ -197,12 +197,28 @@ public class MainController implements Initializable {
             if (payload != null) {
                 payload.hideConnectionPoints();
             }
+
+            for (ConnectionLine line : connections) {
+                line.resetColor();
+            }
+
+            if (connectionLineTemp != null) {
+                connectionLineTemp.resetColor();
+            }
         } else {
             for (GateElement element : simulationElements) {
                 element.showConnectionPoints();
             }
             if (payload != null) {
                 payload.showConnectionPoints();
+            }
+
+            for (ConnectionLine line : connections) {
+                line.setDebugColor();
+            }
+
+            if (connectionLineTemp != null) {
+                connectionLineTemp.setDebugColor();
             }
         }
 

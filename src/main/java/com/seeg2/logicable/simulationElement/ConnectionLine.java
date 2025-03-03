@@ -1,5 +1,6 @@
 package com.seeg2.logicable.simulationElement;
 
+import com.seeg2.logicable.controller.MainController;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -19,14 +20,16 @@ public class ConnectionLine {
         this.horizontalLine = new Line();
 
         verticalLine.setStrokeWidth(2);
-        verticalLine.setStroke(Color.web("#414a54"));
         verticalLine.setStrokeLineCap(StrokeLineCap.ROUND);
 
         horizontalLine.setStrokeWidth(2);
-        horizontalLine.setStroke(Color.web("#414a54"));
         horizontalLine.setStrokeLineCap(StrokeLineCap.ROUND);
 
-        //updatePos();
+        if (MainController.isDebugMode()) {
+            setDebugColor();
+        } else {
+            resetColor();
+        }
 
         this.screen = screen;
         screen.getChildren().addAll(verticalLine, horizontalLine);
@@ -90,5 +93,15 @@ public class ConnectionLine {
 
         screen.getChildren().remove(verticalLine);
         screen.getChildren().remove(horizontalLine);
+    }
+
+    public void setDebugColor() {
+        horizontalLine.setStroke(Color.web("#0000ff"));
+        verticalLine.setStroke(Color.web("#0000ff"));
+    }
+
+    public void resetColor() {
+        horizontalLine.setStroke(Color.web("#414a54"));
+        verticalLine.setStroke(Color.web("#414a54"));
     }
 }
