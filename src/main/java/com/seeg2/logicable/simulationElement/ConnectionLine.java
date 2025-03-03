@@ -66,9 +66,9 @@ public class ConnectionLine {
 
     public void remove(ConnectionPoint connectionPoint) {
         if (connectionPoint == source) {
-            destination.setConnection(null);
+            destination.setConnection(null, null);
         } else {
-            source.setConnection(null);
+            source.setConnection(null, null);
         }
 
         screen.getChildren().remove(verticalLine);
@@ -81,11 +81,11 @@ public class ConnectionLine {
 
     public void remove() {
         if (source != null) {
-            source.setConnection(null);
+            source.setConnection(null, null);
         }
 
         if (destination != null) {
-            destination.setConnection(null);
+            destination.setConnection(null, null);
         }
 
         screen.getChildren().remove(verticalLine);

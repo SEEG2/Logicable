@@ -10,13 +10,14 @@ import javafx.scene.shape.Circle;
 public class ConnectionPoint {
     private Pane screen;
     private float xOffset, yOffset;
-    private ImageView root;
+    private SimulationElement root;
     private Circle boundCircle;
     // true -> input; false -> output
     private boolean isInput;
     private ConnectionLine connection;
+    private SimulationElement connectedElement;
 
-    public ConnectionPoint(Pane screen, ImageView root, float xOffset, float yOffset) {
+    public ConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset) {
         this.screen = screen;
         this.root = root;
         this.xOffset = xOffset;
@@ -29,8 +30,8 @@ public class ConnectionPoint {
             this.hide();
         }
 
-        boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
-        boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
+        boundCircle.centerXProperty().bind(Bindings.add(root.getSprite().layoutXProperty(), xOffset));
+        boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
 
         boundCircle.setOnMouseClicked((action) -> {
             MainController.instance.setPickedConnection(this);
@@ -40,7 +41,7 @@ public class ConnectionPoint {
         screen.getChildren().add(boundCircle);
     }
 
-    public ConnectionPoint(Pane screen, ImageView root, float xOffset, float yOffset, boolean isInput) {
+    public ConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset, boolean isInput) {
         this.screen = screen;
         this.root = root;
         this.xOffset = xOffset;
@@ -53,8 +54,8 @@ public class ConnectionPoint {
             this.hide();
         }
 
-        boundCircle.centerXProperty().bind(Bindings.add(root.layoutXProperty(), xOffset));
-        boundCircle.centerYProperty().bind(Bindings.add(root.layoutYProperty(), yOffset));
+        boundCircle.centerXProperty().bind(Bindings.add(root.getSprite().layoutXProperty(), xOffset));
+        boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
 
         boundCircle.setOnMouseClicked((action) -> {
             MainController.instance.setPickedConnection(this);
@@ -72,8 +73,9 @@ public class ConnectionPoint {
         return connection;
     }
 
-    public void setConnection(ConnectionLine connection) {
+    public void setConnection(ConnectionLine connection, SimulationElement connectedElement) {
         this.connection = connection;
+        this.connectedElement = connectedElement;
     }
 
     public void update() {
@@ -100,12 +102,8 @@ public class ConnectionPoint {
         return isInput;
     }
 
-    public ImageView getRoot() {
+    public SimulationElement getRoot() {
         return root;
-    }
-
-    public void setRoot(ImageView root) {
-        this.root = root;
     }
 
     public void show() {

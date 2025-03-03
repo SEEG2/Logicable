@@ -1,7 +1,6 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.logger.Logger;
-import com.seeg2.logicable.logicGate.NORGate;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -10,7 +9,6 @@ import javafx.scene.layout.Pane;
 public class NORElement extends GateElement {
     public NORElement(Pane screen) {
         super(screen);
-        this.LOGIC_PROVIDER = new NORGate();
         this.SPRITE = new ImageView();
 
         try {
@@ -20,5 +18,9 @@ public class NORElement extends GateElement {
         }
 
         initSprite();
+    }
+
+    public boolean getValue() {
+        return !(tryForValue1() || tryForValue2());
     }
 }

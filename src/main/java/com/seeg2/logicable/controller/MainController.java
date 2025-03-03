@@ -267,8 +267,8 @@ public class MainController implements Initializable {
 
         connectionLineTemp.setDestination(connectionPoint);
         connections.add(connectionLineTemp);
-        pickedConnection.setConnection(connectionLineTemp);
-        connectionPoint.setConnection(connectionLineTemp);
+        pickedConnection.setConnection(connectionLineTemp, connectionPoint.getRoot());
+        connectionPoint.setConnection(connectionLineTemp, pickedConnection.getRoot());
         connectionLineTemp.updatePos();
         connectionLineTemp = null;
         pickedConnection = null;
