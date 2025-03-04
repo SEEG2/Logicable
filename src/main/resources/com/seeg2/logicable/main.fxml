@@ -13,7 +13,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#clearScene" text="Clear">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close">
                      <accelerator>

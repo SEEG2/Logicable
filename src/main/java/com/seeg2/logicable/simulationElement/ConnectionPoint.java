@@ -24,7 +24,7 @@ public class ConnectionPoint {
         this.yOffset = yOffset;
         isInput = true;
 
-        boundCircle = new Circle(5, Color.RED);
+        boundCircle = new Circle(7, Color.RED);
 
         if (!MainController.isDebugMode()) {
             this.hide();
@@ -48,7 +48,7 @@ public class ConnectionPoint {
         this.yOffset = yOffset;
         this.isInput = isInput;
 
-        boundCircle = new Circle(5, Color.RED);
+        boundCircle = new Circle(7, Color.RED);
 
         if (!MainController.isDebugMode()) {
             this.hide();

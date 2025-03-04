@@ -263,12 +263,22 @@ public class MainController implements Initializable {
 
         if (connectionPoint.isInput() == pickedConnection.isInput()) {
             pickedConnection = connectionPoint;
+
+            if (connectionLineTemp != null) {
+                connectionLineTemp.remove();
+            }
+
             connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
 
         if (pickedConnection.getRoot().equals(connectionPoint.getRoot())) {
             pickedConnection = connectionPoint;
+
+            if (connectionLineTemp != null) {
+                connectionLineTemp.remove();
+            }
+
             connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
