@@ -10,14 +10,14 @@ import javafx.scene.shape.Circle;
 public class ConnectionPoint {
     private Pane screen;
     private float xOffset, yOffset;
-    private SimulationElement root;
+    private SceneElement root;
     private Circle boundCircle;
     // true -> input; false -> output
     private boolean isInput;
     private ConnectionLine connection;
-    private SimulationElement connectedElement;
+    private SceneElement connectedElement;
 
-    public ConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset) {
+    public ConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset) {
         this.screen = screen;
         this.root = root;
         this.xOffset = xOffset;
@@ -41,7 +41,7 @@ public class ConnectionPoint {
         screen.getChildren().add(boundCircle);
     }
 
-    public ConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset, boolean isInput) {
+    public ConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset, boolean isInput) {
         this.screen = screen;
         this.root = root;
         this.xOffset = xOffset;
@@ -73,7 +73,7 @@ public class ConnectionPoint {
         return connection;
     }
 
-    public void setConnection(ConnectionLine connection, SimulationElement connectedElement) {
+    public void setConnection(ConnectionLine connection, SceneElement connectedElement) {
         this.connection = connection;
         this.connectedElement = connectedElement;
     }
@@ -102,7 +102,7 @@ public class ConnectionPoint {
         return isInput;
     }
 
-    public SimulationElement getRoot() {
+    public SceneElement getRoot() {
         return root;
     }
 

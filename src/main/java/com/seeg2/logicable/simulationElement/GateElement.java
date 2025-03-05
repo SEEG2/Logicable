@@ -1,41 +1,12 @@
 package com.seeg2.logicable.simulationElement;
 
-import com.seeg2.logicable.controller.MainController;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.Glow;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public abstract class GateElement implements SimulationElement {
-    public ImageView SPRITE;
+public abstract class GateElement extends SceneElement {
     protected ConnectionPoint input1, input2, output;
-    protected final Pane screen;
-    protected boolean isActive;
-    private double mouseX, mouseY;
-    private float centerLineY, inputOffsetY;
 
     protected GateElement(Pane screen) {
-        this.screen = screen;
-    }
-
-    public void select() {
-        ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setBrightness(0.4d);
-        colorAdjust.setHue(0.01d);
-        colorAdjust.setSaturation(0.5d);
-
-        Blend blend = new Blend();
-        blend.setTopInput(colorAdjust);
-        blend.setBottomInput(new Glow(0.8d));
-
-        SPRITE.setEffect(blend);
-
-        MainController.selectSimulationElement(this);
-    }
-
-    public void deselect() {
-        SPRITE.setEffect(null);
+        super(screen);
     }
 
     public void setPosition(double x, double y) {
@@ -54,10 +25,10 @@ public abstract class GateElement implements SimulationElement {
         screen.getChildren().add(SPRITE);
         SPRITE.setPickOnBounds(true);
 
-        centerLineY = (float) (SPRITE.getFitHeight() / 2f);
+        float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
         // Position of the connector relative to the center line. Based on the images used.
-        inputOffsetY = (float) (SPRITE.getFitHeight() / 3.6f);
+        float inputOffsetY = (float) (SPRITE.getFitHeight() / 3.6f);
 
         input1 = new ConnectionPoint(screen, this, 0, centerLineY + inputOffsetY);
         input2 = new ConnectionPoint(screen, this, 0, centerLineY - inputOffsetY);
@@ -103,10 +74,6 @@ public abstract class GateElement implements SimulationElement {
         output.remove();
     }
 
-    public void setActive() {
-        isActive = true;
-    }
-
     public void showConnectionPoints() {
         input1.show();
         input2.show();
@@ -117,10 +84,6 @@ public abstract class GateElement implements SimulationElement {
         input1.hide();
         input2.hide();
         output.hide();
-    }
-
-    public ImageView getSprite() {
-        return SPRITE;
     }
 
     protected boolean tryForValue1() {

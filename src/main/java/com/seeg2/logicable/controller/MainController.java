@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private static GateElement payload;
-    private static GateElement selectedElement;
-    private final static ArrayList<GateElement> simulationElements = new ArrayList<>();
+    private static SceneElement payload;
+    private static SceneElement selectedElement;
+    private final static ArrayList<SceneElement> sceneElements = new ArrayList<>();
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     public static MainController instance;
     private static ConnectionPoint pickedConnection;
@@ -58,11 +58,11 @@ public class MainController implements Initializable {
 
     @FXML
     public void clearScene() {
-        for (GateElement element : simulationElements) {
+        for (SceneElement element : sceneElements) {
             element.remove();
         }
 
-        simulationElements.clear();
+        sceneElements.clear();
     }
 
     @FXML
@@ -170,7 +170,7 @@ public class MainController implements Initializable {
     @FXML
     public void screenClicked() {
         if (payload != null) {
-            simulationElements.add(payload);
+            sceneElements.add(payload);
             payload.SPRITE.toBack();
             payload.setActive();
             payload = null;
@@ -191,7 +191,7 @@ public class MainController implements Initializable {
     @FXML
     public void toggleDebugMode() {
         if (isDebugMode) {
-            for (GateElement element : simulationElements) {
+            for (SceneElement element : sceneElements) {
                 element.hideConnectionPoints();
             }
             if (payload != null) {
@@ -206,7 +206,7 @@ public class MainController implements Initializable {
                 connectionLineTemp.resetColor();
             }
         } else {
-            for (GateElement element : simulationElements) {
+            for (SceneElement element : sceneElements) {
                 element.showConnectionPoints();
             }
             if (payload != null) {
@@ -225,16 +225,16 @@ public class MainController implements Initializable {
         isDebugMode ^= true;
     }
 
-    public static void removeSimulationElement(GateElement element) {
+    public static void removeSimulationElement(SceneElement element) {
         if (selectedElement == element) {
             selectedElement = null;
         }
 
-        simulationElements.remove(element);
+        sceneElements.remove(element);
         element.remove();
     }
 
-    public static void selectSimulationElement(GateElement element) {
+    public static void selectSimulationElement(SceneElement element) {
         if (element == selectedElement) {
             return;
         }
