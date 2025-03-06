@@ -76,7 +76,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void closeClicked() {
-        Application.close();
+        Application.close(0);
     }
 
     @FXML
@@ -216,7 +216,6 @@ public class MainController implements Initializable {
             for (ConnectionLine line : connections) {
                 line.setDebugColor();
             }
-
             if (connectionLineTemp != null) {
                 connectionLineTemp.setDebugColor();
             }
@@ -298,10 +297,6 @@ public class MainController implements Initializable {
         connectionLineTemp.updatePos();
         connectionLineTemp = null;
         pickedConnection = null;
-    }
-
-    public static ConnectionPoint getPickedConnection() {
-        return pickedConnection;
     }
 
     public static boolean isDebugMode() {

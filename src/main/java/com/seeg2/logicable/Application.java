@@ -16,7 +16,7 @@ public class Application extends javafx.application.Application {
         Logger.info("Starting " + APPLICATION_NAME + " - Version: " + VERSION);
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 960, 540);
-        stage.setOnCloseRequest((action) -> Application.close());
+        stage.setOnCloseRequest((action) -> Application.close(0));
         stage.setMinWidth(720);
         stage.setMinHeight(480);
         stage.setTitle(APPLICATION_NAME);
@@ -29,8 +29,8 @@ public class Application extends javafx.application.Application {
         launch();
     }
 
-    public static void close() {
-        Logger.info("Program Closed");
-        System.exit(0);
+    public static void close(int exitCode) {
+        Logger.info("Program closed with exit code: " + exitCode);
+        System.exit(exitCode);
     }
 }

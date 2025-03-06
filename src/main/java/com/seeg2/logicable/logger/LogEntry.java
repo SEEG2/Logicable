@@ -3,10 +3,10 @@ package com.seeg2.logicable.logger;
 import com.seeg2.logicable.util.Time;
 
 public class LogEntry {
-    private String time;
-    private long sysTimeMS;
-    private LogEntryType type;
-    private String message;
+    private final String time;
+    private final long sysTimeMS;
+    private final LogEntryType type;
+    private final String message;
 
     public enum LogEntryType {
         INFO,
