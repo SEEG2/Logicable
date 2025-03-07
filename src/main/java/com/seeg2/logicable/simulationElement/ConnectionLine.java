@@ -101,7 +101,7 @@ public class ConnectionLine {
     }
 
     public void resetColor() {
-        horizontalLine.setStroke(Color.web("#414a54"));
-        verticalLine.setStroke(Color.web("#414a54"));
+        horizontalLine.setStroke(Color.web("#3a4450"));
+        verticalLine.setStroke(Color.web("#3a4450"));
     }
 }
