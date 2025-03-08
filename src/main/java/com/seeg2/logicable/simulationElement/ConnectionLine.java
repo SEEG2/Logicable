@@ -12,10 +12,34 @@ public class ConnectionLine {
     private Line verticalLine;
     private Line horizontalLine;
     private Pane screen;
+    private boolean isTemp = false;
 
     public ConnectionLine(ConnectionPoint source, ConnectionPoint destination, Pane screen) {
         this.source = source;
         this.destination = destination;
+        this.verticalLine = new Line();
+        this.horizontalLine = new Line();
+
+        verticalLine.setStrokeWidth(2);
+        verticalLine.setStrokeLineCap(StrokeLineCap.ROUND);
+
+        horizontalLine.setStrokeWidth(2);
+        horizontalLine.setStrokeLineCap(StrokeLineCap.ROUND);
+
+        if (MainController.isDebugMode()) {
+            setDebugColor();
+        } else {
+            resetColor();
+        }
+
+        this.screen = screen;
+        screen.getChildren().addAll(verticalLine, horizontalLine);
+    }
+
+    public ConnectionLine(ConnectionPoint source, ConnectionPoint destination, Pane screen, boolean isTemp) {
+        this.source = source;
+        this.destination = destination;
+        this.isTemp = isTemp;
         this.verticalLine = new Line();
         this.horizontalLine = new Line();
 
@@ -83,6 +107,12 @@ public class ConnectionLine {
     }
 
     public void remove() {
+        if (isTemp) {
+            screen.getChildren().remove(verticalLine);
+            screen.getChildren().remove(horizontalLine);
+            return;
+        }
+
         if (source != null) {
             source.setConnection(null, null);
         }
@@ -103,5 +133,9 @@ public class ConnectionLine {
     public void resetColor() {
         horizontalLine.setStroke(Color.web("#3a4450"));
         verticalLine.setStroke(Color.web("#3a4450"));
+    }
+
+    public void setToNotTemp() {
+        isTemp = false;
     }
 }

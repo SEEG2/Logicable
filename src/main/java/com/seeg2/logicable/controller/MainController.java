@@ -275,7 +275,7 @@ public class MainController implements Initializable {
     public void setPickedConnection(ConnectionPoint connectionPoint) {
         if (pickedConnection == null) {
             pickedConnection = connectionPoint;
-            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen, true);
             return;
         }
 
@@ -310,6 +310,7 @@ public class MainController implements Initializable {
         }
 
         connectionLineTemp.setDestination(connectionPoint);
+        connectionLineTemp.setToNotTemp();
         connections.add(connectionLineTemp);
         pickedConnection.setConnection(connectionLineTemp, connectionPoint.getRoot());
         connectionPoint.setConnection(connectionLineTemp, pickedConnection.getRoot());
