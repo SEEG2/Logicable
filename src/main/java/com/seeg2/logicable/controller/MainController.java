@@ -105,6 +105,25 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void INPUTClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new NOTElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    // TODO add functionality to for input/output/not -> not-gate code is just a place holder
+    @FXML
+    public void OUTPUTClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new NOTElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
     public void NOTClicked() {
         if (payload != null) {
             payload.remove();

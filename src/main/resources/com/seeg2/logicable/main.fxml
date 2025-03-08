@@ -80,6 +80,16 @@
                      <Image url="@../../../images/logic_gates/NOT.png" />
                  </image>
              </ImageView>
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#INPUTClicked" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@../../../images/logic_gates/INPUT.png" />
+                 </image>
+             </ImageView>
+             <ImageView fitHeight="71.0" fitWidth="86.0" onMouseClicked="#OUTPUTClicked" pickOnBounds="true" preserveRatio="true">
+                 <image>
+                     <Image url="@../../../images/logic_gates/OUTPUT.png" />
+                 </image>
+             </ImageView>
          </buttons></ButtonBar>
    </children>
 </AnchorPane>
