@@ -84,11 +84,12 @@ public class NOTElement extends SceneElement {
     }
 
     private boolean tryForValue() {
-        if (input.getRoot() == null) {
+        ConnectionPoint otherConnectionPoint = input.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
             return false;
         }
 
-        return input.getRoot().getValue();
+        return otherConnectionPoint.getRoot().getValue();
     }
 
     public boolean getValue() {

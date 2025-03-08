@@ -138,4 +138,12 @@ public class ConnectionLine {
     public void setToNotTemp() {
         isTemp = false;
     }
+
+    public ConnectionPoint getOtherConnectionPoint(ConnectionPoint connectionPoint) {
+        if (connectionPoint == source) {
+            return destination;
+        }
+
+        return source;
+    }
 }

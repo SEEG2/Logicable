@@ -87,19 +87,20 @@ public abstract class GateElement extends SceneElement {
     }
 
     protected boolean tryForValue1() {
-        if (input1.getRoot() == null) {
+        ConnectionPoint otherConnectionPoint = input1.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
             return false;
         }
 
-        return input1.getRoot().getValue();
+        return otherConnectionPoint.getRoot().getValue();
     }
 
-
     protected boolean tryForValue2() {
-        if (input2.getRoot() == null) {
+        ConnectionPoint otherConnectionPoint = input2.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
             return false;
         }
 
-        return input2.getRoot().getValue();
+        return otherConnectionPoint.getRoot().getValue();
     }
 }

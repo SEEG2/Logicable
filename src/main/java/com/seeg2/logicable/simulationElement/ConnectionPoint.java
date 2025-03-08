@@ -110,8 +110,15 @@ public class ConnectionPoint {
         boundCircle.setOpacity(1);
     }
 
-
     public void hide() {
         boundCircle.setOpacity(0);
+    }
+
+    public ConnectionPoint getOtherConnectionPoint() {
+        if (connection == null) {
+            return null;
+        }
+
+        return connection.getOtherConnectionPoint(this);
     }
 }
