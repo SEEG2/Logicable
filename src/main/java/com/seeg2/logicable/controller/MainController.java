@@ -109,7 +109,7 @@ public class MainController implements Initializable {
         if (payload != null) {
             payload.remove();
         }
-        payload = new NOTElement(screen);
+        payload = new INPUTElement(screen);
         payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
     }
 

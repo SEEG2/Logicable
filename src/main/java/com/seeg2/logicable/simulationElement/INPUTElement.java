@@ -1,24 +1,32 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.logger.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+
+import static javafx.scene.paint.Color.GREEN;
+import static javafx.scene.paint.Color.RED;
 
 // TODO  rework this (just a place holder right now)
-public class NOTElement extends SceneElement {
-    private ConnectionPoint input, output;
-    public NOTElement(Pane screen) {
+public class INPUTElement extends SceneElement {
+    private ConnectionPoint output;
+    private boolean value;
+    private Circle valueCircle;
+    public INPUTElement(Pane screen) {
         super(screen);
         this.SPRITE = new ImageView();
 
         try {
-            SPRITE.setImage(new Image(getClass().getResource("/images/logic_gates/NOT.png").toExternalForm()));
+            SPRITE.setImage(new Image(getClass().getResource("/images/logic_gates/INPUT.png").toExternalForm()));
         } catch (Exception e) {
-            Logger.error("Failed to load NOT-sprite");
+            Logger.error("Failed to load INPUT-sprite");
         }
 
         initSprite();
+        initValueCircle();
     }
 
     private void initSprite() {
@@ -30,7 +38,6 @@ public class NOTElement extends SceneElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        input = new ConnectionPoint(screen, this, 0, centerLineY);
         output = new ConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
@@ -65,41 +72,50 @@ public class NOTElement extends SceneElement {
         });
     }
 
+    private void initValueCircle() {
+        valueCircle = new Circle(15);
+        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 21.5f));
+        valueCircle.centerYProperty().bind(Bindings.add(SPRITE.layoutYProperty(), Bindings.divide(SPRITE.fitHeightProperty(), 2)));
+        valueCircle.setOnMouseClicked((event) -> {
+            value ^= true;
+            updateCircleColor();
+            event.consume();
+        });
+        updateCircleColor();
+
+        screen.getChildren().add(valueCircle);
+    }
+
     public void setPosition(double x, double y) {
         SPRITE.setLayoutX(x);
         SPRITE.setLayoutY(y);
 
-        input.update();
         output.update();
     }
 
     public void showConnectionPoints() {
-        input.show();
         output.show();
     }
 
     public void hideConnectionPoints() {
-        input.hide();
         output.hide();
     }
 
-    private boolean tryForValue() {
-        ConnectionPoint otherConnectionPoint = input.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return false;
-        }
-
-        return otherConnectionPoint.getRoot().getValue();
-    }
-
     public boolean getValue() {
-        return !tryForValue();
+        return value;
     }
 
     public void remove() {
         screen.getChildren().remove(SPRITE);
 
-        input.remove();
         output.remove();
+    }
+
+    private void updateCircleColor() {
+        if (value) {
+            valueCircle.setFill(GREEN);
+            return;
+        }
+        valueCircle.setFill(RED);
     }
 }
