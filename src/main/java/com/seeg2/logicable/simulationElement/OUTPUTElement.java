@@ -11,20 +11,18 @@ import static javafx.scene.paint.Color.GREEN;
 import static javafx.scene.paint.Color.RED;
 
 // TODO  rework this (just a place holder right now)
-public class INPUTElement extends SceneElement {
-    private ConnectionPoint output;
-    private boolean value;
+public class OUTPUTElement extends SceneElement {
+    private ConnectionPoint input;
     private Circle valueCircle;
-    private boolean circleDragged;
-
-    public INPUTElement(Pane screen) {
+    boolean value;
+    public OUTPUTElement(Pane screen) {
         super(screen);
         this.SPRITE = new ImageView();
 
         try {
-            SPRITE.setImage(new Image(getClass().getResource("/images/logic_gates/INPUT.png").toExternalForm()));
+            SPRITE.setImage(new Image(getClass().getResource("/images/logic_gates/OUTPUT.png").toExternalForm()));
         } catch (Exception e) {
-            Logger.error("Failed to load INPUT-sprite");
+            Logger.error("Failed to load OUTPUT-sprite");
         }
 
         initSprite();
@@ -40,7 +38,7 @@ public class INPUTElement extends SceneElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        output = new ConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
+        input = new ConnectionPoint(screen, this, 0, centerLineY, true);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -76,27 +74,11 @@ public class INPUTElement extends SceneElement {
 
     private void initValueCircle() {
         valueCircle = new Circle(15);
-        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 21.5f));
+        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 28.5f));
         valueCircle.centerYProperty().bind(Bindings.add(SPRITE.layoutYProperty(), Bindings.divide(SPRITE.fitHeightProperty(), 2)));
-        valueCircle.setOnMouseClicked((event) -> {
-            if (circleDragged) {
-                circleDragged = false;
-                return;
-            }
-
-            value ^= true;
-            updateCircleColor();
-            pushValue();
-            event.consume();
-        });
+        valueCircle.setOnMouseClicked(SPRITE.getOnMouseClicked());
         valueCircle.setOnMousePressed(SPRITE.getOnMousePressed());
-        valueCircle.setOnMouseDragged((action) -> {
-            if (SPRITE.getOnMouseDragged() != null) {
-                SPRITE.getOnMouseDragged().handle(action);
-            }
-            circleDragged = true;
-        });
-
+        valueCircle.setOnMouseDragged(SPRITE.getOnMouseDragged());
         updateCircleColor();
 
         screen.getChildren().add(valueCircle);
@@ -106,18 +88,20 @@ public class INPUTElement extends SceneElement {
         SPRITE.setLayoutX(x);
         SPRITE.setLayoutY(y);
 
-        output.update();
+        input.update();
     }
 
     public void showConnectionPoints() {
-        output.show();
+        input.show();
     }
 
     public void hideConnectionPoints() {
-        output.hide();
+        input.hide();
     }
 
     public boolean getValue() {
+        value = tryForValue();
+        updateCircleColor();
         return value;
     }
 
@@ -125,7 +109,16 @@ public class INPUTElement extends SceneElement {
         screen.getChildren().remove(SPRITE);
         screen.getChildren().remove(valueCircle);
 
-        output.remove();
+        input.remove();
+    }
+
+    protected boolean tryForValue() {
+        ConnectionPoint otherConnectionPoint = input.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
+            return false;
+        }
+
+        return otherConnectionPoint.getRoot().getValue();
     }
 
     private void updateCircleColor() {
@@ -136,12 +129,10 @@ public class INPUTElement extends SceneElement {
         valueCircle.setFill(RED);
     }
 
-    public void pushValue() {
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint != null) {
-            otherConnectionPoint.getRoot().pushValue(output, value);
-        }
+    public void pushValue(ConnectionPoint source, boolean value) {
+        this.value = value;
+        updateCircleColor();
     }
 
-    public void pushValue(ConnectionPoint source, boolean value) {}
+    public void pushValue() {}
 }

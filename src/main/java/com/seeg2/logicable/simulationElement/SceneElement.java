@@ -41,8 +41,9 @@ public abstract class SceneElement {
     public void setActive() {
         isActive = true;
     }
-
     public abstract void showConnectionPoints();
+    public abstract void pushValue();
+    protected abstract void pushValue(ConnectionPoint source, boolean value);
     public abstract void hideConnectionPoints();
     public abstract void remove();
     public abstract boolean getValue();

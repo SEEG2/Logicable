@@ -21,7 +21,7 @@ public class ANDElement extends GateElement {
         initSprite();
     }
 
-    public boolean getValue() {
-        return tryForValue1() && tryForValue2();
+    protected boolean calcValueForInputs(boolean value1, boolean value2) {
+        return value1 && value2;
     }
 }

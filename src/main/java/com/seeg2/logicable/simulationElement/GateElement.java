@@ -4,7 +4,7 @@ import javafx.scene.layout.Pane;
 
 public abstract class GateElement extends SceneElement {
     protected ConnectionPoint input1, input2, output;
-
+    protected boolean cached1, cached2;
     protected GateElement(Pane screen) {
         super(screen);
     }
@@ -86,21 +86,31 @@ public abstract class GateElement extends SceneElement {
         output.hide();
     }
 
-    protected boolean tryForValue1() {
-        ConnectionPoint otherConnectionPoint = input1.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return false;
-        }
-
-        return otherConnectionPoint.getRoot().getValue();
+    public boolean getValue() {
+        return calcValueForInputs(cached1, cached2);
     }
 
-    protected boolean tryForValue2() {
-        ConnectionPoint otherConnectionPoint = input2.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return false;
+    public void pushValue() {
+        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
+        if (otherConnectionPoint != null) {
+            otherConnectionPoint.getRoot().pushValue(output, calcValueForInputs(cached1, cached2));
+        }
+    }
+
+    protected void pushValue(ConnectionPoint source, boolean value) {
+        if (source == input1.getOtherConnectionPoint()) {
+            cached1 = value;
+        } else {
+            cached2 = value;
         }
 
-        return otherConnectionPoint.getRoot().getValue();
+        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
+            return;
+        }
+
+        otherConnectionPoint.getRoot().pushValue(output, calcValueForInputs(cached1, cached2));
     }
+
+    protected abstract boolean calcValueForInputs(boolean value1, boolean value2);
 }

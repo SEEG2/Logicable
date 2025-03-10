@@ -8,6 +8,8 @@ import javafx.scene.layout.Pane;
 // TODO  rework this (just a place holder right now)
 public class NOTElement extends SceneElement {
     private ConnectionPoint input, output;
+    private boolean cached;
+
     public NOTElement(Pane screen) {
         super(screen);
         this.SPRITE = new ImageView();
@@ -93,7 +95,7 @@ public class NOTElement extends SceneElement {
     }
 
     public boolean getValue() {
-        return !tryForValue();
+        return cached;
     }
 
     public void remove() {
@@ -101,5 +103,23 @@ public class NOTElement extends SceneElement {
 
         input.remove();
         output.remove();
+    }
+
+    public void pushValue() {
+        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
+        if (otherConnectionPoint != null) {
+            otherConnectionPoint.getRoot().pushValue(output, !cached);
+        }
+    }
+
+    public void pushValue(ConnectionPoint source, boolean value) {
+        cached = value;
+
+        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
+        if (otherConnectionPoint == null) {
+            return;
+        }
+
+        otherConnectionPoint.getRoot().pushValue(output, !value);
     }
 }
