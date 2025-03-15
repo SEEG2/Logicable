@@ -67,6 +67,8 @@ public abstract class GateElement extends SceneElement {
     }
 
     public void remove() {
+        pushValue(output, false);
+        pushValue();
         screen.getChildren().remove(SPRITE);
 
         input1.remove();

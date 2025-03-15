@@ -99,6 +99,7 @@ public class NOTElement extends SceneElement {
     }
 
     public void remove() {
+        pushValue(output, true);
         screen.getChildren().remove(SPRITE);
 
         input.remove();

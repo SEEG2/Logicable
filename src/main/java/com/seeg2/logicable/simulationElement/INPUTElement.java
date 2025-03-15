@@ -122,6 +122,9 @@ public class INPUTElement extends SceneElement {
     }
 
     public void remove() {
+        value = false;
+        pushValue();
+
         screen.getChildren().remove(SPRITE);
         screen.getChildren().remove(valueCircle);
 

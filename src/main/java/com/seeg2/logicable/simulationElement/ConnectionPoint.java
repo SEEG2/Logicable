@@ -2,7 +2,6 @@ package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
 import javafx.beans.binding.Bindings;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,7 +14,7 @@ public class ConnectionPoint {
     // true -> input; false -> output
     private boolean isInput;
     private ConnectionLine connection;
-    private SceneElement connectedElement;
+    private ConnectionPoint otherConnectionPoint;
 
     public ConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset) {
         this.screen = screen;
@@ -73,9 +72,9 @@ public class ConnectionPoint {
         return connection;
     }
 
-    public void setConnection(ConnectionLine connection, SceneElement connectedElement) {
+    public void setConnection(ConnectionLine connection, ConnectionPoint connectedElement) {
         this.connection = connection;
-        this.connectedElement = connectedElement;
+        this.otherConnectionPoint = connectedElement;
     }
 
     public void update() {
@@ -115,10 +114,6 @@ public class ConnectionPoint {
     }
 
     public ConnectionPoint getOtherConnectionPoint() {
-        if (connection == null) {
-            return null;
-        }
-
-        return connection.getOtherConnectionPoint(this);
+        return otherConnectionPoint;
     }
 }

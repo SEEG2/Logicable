@@ -17,6 +17,7 @@ public class ConnectionLine {
     public ConnectionLine(ConnectionPoint source, ConnectionPoint destination, Pane screen) {
         this.source = source;
         this.destination = destination;
+        this.screen = screen;
         this.verticalLine = new Line();
         this.horizontalLine = new Line();
 
@@ -32,7 +33,6 @@ public class ConnectionLine {
             resetColor();
         }
 
-        this.screen = screen;
         screen.getChildren().addAll(verticalLine, horizontalLine);
     }
 
@@ -40,6 +40,7 @@ public class ConnectionLine {
         this.source = source;
         this.destination = destination;
         this.isTemp = isTemp;
+        this.screen = screen;
         this.verticalLine = new Line();
         this.horizontalLine = new Line();
 
@@ -55,7 +56,6 @@ public class ConnectionLine {
             resetColor();
         }
 
-        this.screen = screen;
         screen.getChildren().addAll(verticalLine, horizontalLine);
     }
 
@@ -137,13 +137,5 @@ public class ConnectionLine {
 
     public void setToNotTemp() {
         isTemp = false;
-    }
-
-    public ConnectionPoint getOtherConnectionPoint(ConnectionPoint connectionPoint) {
-        if (connectionPoint == source) {
-            return destination;
-        }
-
-        return source;
     }
 }

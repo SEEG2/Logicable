@@ -280,13 +280,11 @@ public class MainController implements Initializable {
         }
 
         if (connectionPoint.isInput() == pickedConnection.isInput()) {
-            pickedConnection = connectionPoint;
+            pickedConnection = null;
 
             if (connectionLineTemp != null) {
                 connectionLineTemp.remove();
             }
-
-            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
             return;
         }
 
@@ -312,8 +310,8 @@ public class MainController implements Initializable {
         connectionLineTemp.setDestination(connectionPoint);
         connectionLineTemp.setToNotTemp();
         connections.add(connectionLineTemp);
-        pickedConnection.setConnection(connectionLineTemp, connectionPoint.getRoot());
-        connectionPoint.setConnection(connectionLineTemp, pickedConnection.getRoot());
+        pickedConnection.setConnection(connectionLineTemp, connectionPoint);
+        connectionPoint.setConnection(connectionLineTemp, pickedConnection);
         connectionLineTemp.updatePos();
         if (connectionPoint.isInput()) {
             pickedConnection.getRoot().pushValue();
