@@ -124,6 +124,15 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    public void SPLITTERClicked() {
+        if (payload != null) {
+            payload.remove();
+        }
+        payload = new SPLITTERElement(screen);
+        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
+    }
+
+    @FXML
     public void NOTClicked() {
         if (payload != null) {
             payload.remove();
