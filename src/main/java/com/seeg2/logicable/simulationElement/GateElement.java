@@ -3,7 +3,7 @@ package com.seeg2.logicable.simulationElement;
 import javafx.scene.layout.Pane;
 
 public abstract class GateElement extends SceneElement {
-    protected ConnectionPoint input1, input2, output;
+    protected SceneElementConnectionPoint input1, input2, output;
     protected boolean cached1, cached2;
     protected GateElement(Pane screen) {
         super(screen);
@@ -30,9 +30,9 @@ public abstract class GateElement extends SceneElement {
         // Position of the connector relative to the center line. Based on the images used.
         float inputOffsetY = (float) (SPRITE.getFitHeight() / 3.1f);
 
-        input1 = new ConnectionPoint(screen, this, 0, centerLineY + inputOffsetY);
-        input2 = new ConnectionPoint(screen, this, 0, centerLineY - inputOffsetY);
-        output = new ConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
+        input1 = new SceneElementConnectionPoint(screen, this, 0, centerLineY + inputOffsetY);
+        input2 = new SceneElementConnectionPoint(screen, this, 0, centerLineY - inputOffsetY);
+        output = new SceneElementConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -93,9 +93,8 @@ public abstract class GateElement extends SceneElement {
     }
 
     public void pushValue() {
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint != null) {
-            otherConnectionPoint.getRoot().pushValue(output, calcValueForInputs(cached1, cached2));
+        if (output.getConnection() != null) {
+            output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
         }
     }
 
@@ -106,12 +105,9 @@ public abstract class GateElement extends SceneElement {
             cached2 = value;
         }
 
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return;
+        if (output.getConnection() != null) {
+            output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
         }
-
-        otherConnectionPoint.getRoot().pushValue(output, calcValueForInputs(cached1, cached2));
     }
 
     protected abstract boolean calcValueForInputs(boolean value1, boolean value2);

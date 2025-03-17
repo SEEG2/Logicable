@@ -12,7 +12,7 @@ import static javafx.scene.paint.Color.RED;
 
 // TODO  rework this (just a place holder right now)
 public class INPUTElement extends SceneElement {
-    private ConnectionPoint output;
+    private SceneElementConnectionPoint output;
     private boolean value;
     private Circle valueCircle;
     private boolean circleDragged;
@@ -40,7 +40,7 @@ public class INPUTElement extends SceneElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        output = new ConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
+        output = new SceneElementConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -140,9 +140,8 @@ public class INPUTElement extends SceneElement {
     }
 
     public void pushValue() {
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint != null) {
-            otherConnectionPoint.getRoot().pushValue(output, value);
+        if (output.getConnection() != null) {
+            output.getConnection().pushValue(output, value);
         }
     }
 

@@ -16,6 +16,7 @@ public class XORElement extends GateElement {
         } catch (Exception e) {
             Logger.error("Failed to load XOR-sprite");
         }
+
         initSprite();
     }
 

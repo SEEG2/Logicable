@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 // TODO  rework this (just a place holder right now)
 public class NOTElement extends SceneElement {
-    private ConnectionPoint input, output;
+    private SceneElementConnectionPoint input, output;
     private boolean cached;
 
     public NOTElement(Pane screen) {
@@ -32,8 +32,8 @@ public class NOTElement extends SceneElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        input = new ConnectionPoint(screen, this, 0, centerLineY);
-        output = new ConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
+        input = new SceneElementConnectionPoint(screen, this, 0, centerLineY);
+        output = new SceneElementConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -107,20 +107,16 @@ public class NOTElement extends SceneElement {
     }
 
     public void pushValue() {
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint != null) {
-            otherConnectionPoint.getRoot().pushValue(output, !cached);
+        if (output.getConnection() != null) {
+            output.getConnection().pushValue(output, !cached);
         }
     }
 
     public void pushValue(ConnectionPoint source, boolean value) {
         cached = value;
 
-        ConnectionPoint otherConnectionPoint = output.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return;
+        if (output.getConnection() != null) {
+            output.getConnection().pushValue(output, !cached);
         }
-
-        otherConnectionPoint.getRoot().pushValue(output, !value);
     }
 }

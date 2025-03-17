@@ -124,15 +124,6 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    public void SPLITTERClicked() {
-        if (payload != null) {
-            payload.remove();
-        }
-        payload = new SPLITTERElement(screen);
-        payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
-    }
-
-    @FXML
     public void NOTClicked() {
         if (payload != null) {
             payload.remove();
@@ -281,10 +272,10 @@ public class MainController implements Initializable {
         }
     }
 
-    public void setPickedConnection(ConnectionPoint connectionPoint) {
+    public void setPickedConnection(ConnectionPoint connectionPoint, boolean invert) {
         if (pickedConnection == null) {
             pickedConnection = connectionPoint;
-            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen, true);
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen, true, invert);
             return;
         }
 
@@ -304,7 +295,7 @@ public class MainController implements Initializable {
                 connectionLineTemp.remove();
             }
 
-            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen);
+            connectionLineTemp = new ConnectionLine(pickedConnection, null, screen, invert);
             return;
         }
 

@@ -12,7 +12,7 @@ import static javafx.scene.paint.Color.RED;
 
 // TODO  rework this (just a place holder right now)
 public class OUTPUTElement extends SceneElement {
-    private ConnectionPoint input;
+    private SceneElementConnectionPoint input;
     private Circle valueCircle;
     boolean value;
     public OUTPUTElement(Pane screen) {
@@ -38,7 +38,7 @@ public class OUTPUTElement extends SceneElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        input = new ConnectionPoint(screen, this, 0, centerLineY, true);
+        input = new SceneElementConnectionPoint(screen, this, 0, centerLineY, true);
 
         SPRITE.setOnMouseClicked((action) -> {
             if (!this.isActive) {
