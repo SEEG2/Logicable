@@ -37,11 +37,12 @@ public class LineConnectionPoint implements ConnectionPoint {
         );
 
         boundCircle.setOnMouseClicked((action) -> {
-            MainController.instance.setPickedConnection(this, false);
+            this.remove();
             action.consume();
         });
 
         screen.getChildren().add(boundCircle);
+        boundCircle.toFront();
     }
 
     public Circle getCircle() {

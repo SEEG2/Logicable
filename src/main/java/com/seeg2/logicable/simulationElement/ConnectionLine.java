@@ -16,7 +16,7 @@ public class ConnectionLine {
     private Pane screen;
     private final ArrayList<LineConnectionPoint> lineConnectionPoints = new ArrayList<>();
     private boolean isTemp;
-    private final boolean invert;
+    private boolean invert;
 
     public ConnectionLine(ConnectionPoint source, ConnectionPoint destination, Pane screen) {
         this(source, destination, screen, false, false);
@@ -60,6 +60,8 @@ public class ConnectionLine {
         }
 
         screen.getChildren().addAll(verticalLine, horizontalLine);
+        verticalLine.toBack();
+        horizontalLine.toBack();
     }
 
     public void pushValue(ConnectionPoint source, boolean value) {
@@ -78,8 +80,6 @@ public class ConnectionLine {
     }
 
     public void updatePos() {
-
-
         double startX = source.getCircle().getCenterX();
         double startY = source.getCircle().getCenterY();
         double endX = destination.getCircle().getCenterX();
@@ -212,5 +212,9 @@ public class ConnectionLine {
 
     public void setToNotTemp() {
         isTemp = false;
+    }
+
+    public void setInvert(boolean invert) {
+        this.invert = invert;
     }
 }

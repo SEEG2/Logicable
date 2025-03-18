@@ -322,6 +322,11 @@ public class MainController implements Initializable {
         pickedConnection = null;
     }
 
+
+    public boolean isConnectionPicked() {
+        return pickedConnection != null;
+    }
+
     public static boolean isDebugMode() {
         return isDebugMode;
     }

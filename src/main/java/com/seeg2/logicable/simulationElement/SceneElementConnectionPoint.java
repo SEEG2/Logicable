@@ -52,11 +52,17 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
 
         boundCircle.setOnMouseClicked((action) -> {
+            if (!MainController.instance.isConnectionPicked() && this.connection != null) {
+                removeConnection();
+                return;
+            }
+
             MainController.instance.setPickedConnection(this, false);
             action.consume();
         });
 
         screen.getChildren().add(boundCircle);
+        boundCircle.toFront();
     }
 
     public Circle getCircle() {
@@ -90,6 +96,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         if (connection != null) {
             connection.remove();
         }
+        connection = null;
     }
 
     public boolean isInput() {
