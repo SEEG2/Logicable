@@ -35,7 +35,7 @@ public class ConnectionLine {
         this.verticalLine = new Line();
         this.horizontalLine = new Line();
 
-        verticalLine.setStrokeWidth(2.4);
+        verticalLine.setStrokeWidth(2);
         verticalLine.setStrokeLineCap(StrokeLineCap.ROUND);
         verticalLine.setOnMouseClicked((event -> {
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), verticalLine, this, 1, (float) ((event.getY() - verticalLine.getStartY()) / (verticalLine.getEndY() - verticalLine.getStartY())));
@@ -44,7 +44,7 @@ public class ConnectionLine {
             event.consume();
         }));
 
-        horizontalLine.setStrokeWidth(2.4);
+        horizontalLine.setStrokeWidth(2);
         horizontalLine.setStrokeLineCap(StrokeLineCap.ROUND);
         horizontalLine.setOnMouseClicked((event) -> {
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), horizontalLine, this, (float) ((event.getX() - horizontalLine.getStartX()) / (horizontalLine.getEndX() - horizontalLine.getStartX())), 1);

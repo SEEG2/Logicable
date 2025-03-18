@@ -76,7 +76,7 @@ public class INPUTElement extends SceneElement {
 
     private void initValueCircle() {
         valueCircle = new Circle(18);
-        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 25.5f));
+        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 26f));
         valueCircle.centerYProperty().bind(Bindings.add(SPRITE.layoutYProperty(), Bindings.divide(SPRITE.fitHeightProperty(), 2)));
         valueCircle.setOnMouseClicked((event) -> {
             if (circleDragged) {

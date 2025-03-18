@@ -2,6 +2,8 @@ package com.seeg2.logicable.simulationElement;
 
 import javafx.scene.layout.Pane;
 
+import static java.lang.Math.ceil;
+
 public abstract class GateElement extends SceneElement {
     protected SceneElementConnectionPoint input1, input2, output;
     protected boolean cached1, cached2;
@@ -28,7 +30,7 @@ public abstract class GateElement extends SceneElement {
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
         // Position of the connector relative to the center line. Based on the images used.
-        float inputOffsetY = (float) (SPRITE.getFitHeight() / 3.1f);
+        float inputOffsetY = (float) ceil(SPRITE.getFitHeight() / 3.2f); // If this is not a full pixel the lines will look weird
 
         input1 = new SceneElementConnectionPoint(screen, this, 0, centerLineY + inputOffsetY);
         input2 = new SceneElementConnectionPoint(screen, this, 0, centerLineY - inputOffsetY);
