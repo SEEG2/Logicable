@@ -32,7 +32,7 @@ public class OUTPUTElement extends SceneElement {
     private void initSprite() {
         isActive = false;
         SPRITE.setPreserveRatio(true);
-        SPRITE.setFitHeight(50);
+        SPRITE.setFitHeight(60);
         screen.getChildren().add(SPRITE);
         SPRITE.setPickOnBounds(true);
 
@@ -73,8 +73,8 @@ public class OUTPUTElement extends SceneElement {
     }
 
     private void initValueCircle() {
-        valueCircle = new Circle(15);
-        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 28.5f));
+        valueCircle = new Circle(18);
+        valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 34f));
         valueCircle.centerYProperty().bind(Bindings.add(SPRITE.layoutYProperty(), Bindings.divide(SPRITE.fitHeightProperty(), 2)));
         valueCircle.setOnMouseClicked(SPRITE.getOnMouseClicked());
         valueCircle.setOnMousePressed(SPRITE.getOnMousePressed());

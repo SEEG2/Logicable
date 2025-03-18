@@ -26,7 +26,7 @@ public class NOTElement extends SceneElement {
     private void initSprite() {
         isActive = false;
         SPRITE.setPreserveRatio(true);
-        SPRITE.setFitHeight(50);
+        SPRITE.setFitHeight(60);
         screen.getChildren().add(SPRITE);
         SPRITE.setPickOnBounds(true);
 
