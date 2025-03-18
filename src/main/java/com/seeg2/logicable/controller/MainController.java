@@ -307,6 +307,10 @@ public class MainController implements Initializable {
             connectionPoint.removeConnection();
         }
 
+        if (connectionPoint instanceof LineConnectionPoint) {
+            connectionLineTemp.setInvert(!invert);
+        }
+
         connectionLineTemp.setDestination(connectionPoint);
         connectionLineTemp.setToNotTemp();
         connections.add(connectionLineTemp);
