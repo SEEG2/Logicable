@@ -54,8 +54,8 @@ public class ConnectionLine {
                 return;
             }
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), verticalLine, this, 1, (float) ((event.getY() - verticalLine.getStartY()) / (verticalLine.getEndY() - verticalLine.getStartY())));
-            MainController.instance.setPickedConnection(lineConnectionPoint, true);
             lineConnectionPoints.add(lineConnectionPoint);
+            MainController.instance.setPickedConnection(lineConnectionPoint, true);
             event.consume();
         }));
 
@@ -74,8 +74,8 @@ public class ConnectionLine {
                 return;
             }
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), horizontalLine, this, (float) ((event.getX() - horizontalLine.getStartX()) / (horizontalLine.getEndX() - horizontalLine.getStartX())), 1);
-            MainController.instance.setPickedConnection(lineConnectionPoint, false);
             lineConnectionPoints.add(lineConnectionPoint);
+            MainController.instance.setPickedConnection(lineConnectionPoint, false);
             event.consume();
         });
 

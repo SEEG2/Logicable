@@ -117,10 +117,6 @@ public class INPUTElement extends SceneElement {
         output.hide();
     }
 
-    public boolean getValue() {
-        return value;
-    }
-
     public void remove() {
         value = false;
         pushValue();

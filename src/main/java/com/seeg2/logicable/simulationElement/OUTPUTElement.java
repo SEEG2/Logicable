@@ -99,26 +99,11 @@ public class OUTPUTElement extends SceneElement {
         input.hide();
     }
 
-    public boolean getValue() {
-        value = tryForValue();
-        updateCircleColor();
-        return value;
-    }
-
     public void remove() {
         screen.getChildren().remove(SPRITE);
         screen.getChildren().remove(valueCircle);
 
         input.remove();
-    }
-
-    protected boolean tryForValue() {
-        ConnectionPoint otherConnectionPoint = input.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return false;
-        }
-
-        return otherConnectionPoint.getRoot().getValue();
     }
 
     private void updateCircleColor() {

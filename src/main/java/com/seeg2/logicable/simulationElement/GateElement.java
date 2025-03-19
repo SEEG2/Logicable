@@ -90,10 +90,6 @@ public abstract class GateElement extends SceneElement {
         output.hide();
     }
 
-    public boolean getValue() {
-        return calcValueForInputs(cached1, cached2);
-    }
-
     public void pushValue() {
         if (output.getConnection() != null) {
             output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));

@@ -46,6 +46,5 @@ public abstract class SceneElement {
     protected abstract void pushValue(ConnectionPoint source, boolean value);
     public abstract void hideConnectionPoints();
     public abstract void remove();
-    public abstract boolean getValue();
     public abstract void setPosition(double x, double y);
 }

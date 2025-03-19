@@ -85,19 +85,6 @@ public class NOTElement extends SceneElement {
         output.hide();
     }
 
-    private boolean tryForValue() {
-        ConnectionPoint otherConnectionPoint = input.getOtherConnectionPoint();
-        if (otherConnectionPoint == null) {
-            return false;
-        }
-
-        return otherConnectionPoint.getRoot().getValue();
-    }
-
-    public boolean getValue() {
-        return cached;
-    }
-
     public void remove() {
         pushValue(output, true);
         screen.getChildren().remove(SPRITE);
