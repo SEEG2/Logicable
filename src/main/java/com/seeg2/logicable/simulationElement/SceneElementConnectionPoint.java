@@ -16,25 +16,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
     private ConnectionPoint otherConnectionPoint;
 
     public SceneElementConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset) {
-        this.screen = screen;
-        this.root = root;
-        isInput = true;
-
-        boundCircle = new Circle(7, Color.RED);
-
-        if (!MainController.isDebugMode()) {
-            this.hide();
-        }
-
-        boundCircle.centerXProperty().bind(Bindings.add(root.getSprite().layoutXProperty(), xOffset));
-        boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
-
-        boundCircle.setOnMouseClicked((action) -> {
-            MainController.instance.setPickedConnection(this, false);
-            action.consume();
-        });
-
-        screen.getChildren().add(boundCircle);
+        this(screen, root, xOffset, yOffset, true);
     }
 
     public SceneElementConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset, boolean isInput) {
@@ -42,7 +24,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         this.root = root;
         this.isInput = isInput;
 
-        boundCircle = new Circle(7, Color.RED);
+        boundCircle = new Circle(9, Color.RED);
 
         if (!MainController.isDebugMode()) {
             this.hide();

@@ -308,7 +308,7 @@ public class MainController implements Initializable {
         }
 
         if (connectionPoint instanceof LineConnectionPoint) {
-            connectionLineTemp.setInvert(!invert);
+            connectionLineTemp.setInvert(invert);
         }
 
         connectionLineTemp.setDestination(connectionPoint);
@@ -317,11 +317,13 @@ public class MainController implements Initializable {
         pickedConnection.setConnection(connectionLineTemp, connectionPoint);
         connectionPoint.setConnection(connectionLineTemp, pickedConnection);
         connectionLineTemp.updatePos();
+
         if (connectionPoint.isInput()) {
             pickedConnection.getRoot().pushValue();
         } else {
             connectionPoint.getRoot().pushValue();
         }
+
         connectionLineTemp = null;
         pickedConnection = null;
     }

@@ -20,7 +20,7 @@ public class LineConnectionPoint implements ConnectionPoint {
         this.root = root;
         this.origin = origin;
 
-        boundCircle = new Circle(7, Color.GREEN);
+        boundCircle = new Circle(9, Color.GREEN);
 
         if (!MainController.isDebugMode()) {
             this.hide();

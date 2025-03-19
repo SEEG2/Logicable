@@ -12,7 +12,9 @@ public class ConnectionLine {
     private ConnectionPoint source;
     private ConnectionPoint destination;
     private Line verticalLine;
+    private Line verticalLineClickBox;
     private Line horizontalLine;
+    private Line horizontalLineClickBox;
     private Pane screen;
     private final ArrayList<LineConnectionPoint> lineConnectionPoints = new ArrayList<>();
     private boolean isTemp;
@@ -34,10 +36,23 @@ public class ConnectionLine {
         this.invert = invert;
         this.verticalLine = new Line();
         this.horizontalLine = new Line();
+        this.verticalLineClickBox = new Line();
+        this.horizontalLineClickBox = new Line();
 
         verticalLine.setStrokeWidth(2);
         verticalLine.setStrokeLineCap(StrokeLineCap.ROUND);
-        verticalLine.setOnMouseClicked((event -> {
+        verticalLineClickBox.setStrokeWidth(6);
+        verticalLineClickBox.setStrokeLineCap(StrokeLineCap.ROUND);
+        verticalLineClickBox.setStroke(Color.web("#550055"));
+        verticalLineClickBox.setOpacity(0);
+        verticalLineClickBox.endXProperty().bind(verticalLine.endXProperty());
+        verticalLineClickBox.endYProperty().bind(verticalLine.endYProperty());
+        verticalLineClickBox.startYProperty().bind(verticalLine.startYProperty());
+        verticalLineClickBox.startXProperty().bind(verticalLine.startXProperty());
+        verticalLineClickBox.setOnMouseClicked((event -> {
+            if (this.isTemp) {
+                return;
+            }
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), verticalLine, this, 1, (float) ((event.getY() - verticalLine.getStartY()) / (verticalLine.getEndY() - verticalLine.getStartY())));
             MainController.instance.setPickedConnection(lineConnectionPoint, true);
             lineConnectionPoints.add(lineConnectionPoint);
@@ -46,7 +61,18 @@ public class ConnectionLine {
 
         horizontalLine.setStrokeWidth(2);
         horizontalLine.setStrokeLineCap(StrokeLineCap.ROUND);
-        horizontalLine.setOnMouseClicked((event) -> {
+        horizontalLineClickBox.setStrokeWidth(6);
+        horizontalLineClickBox.setStrokeLineCap(StrokeLineCap.ROUND);
+        horizontalLineClickBox.setStroke(Color.web("#550055"));
+        horizontalLineClickBox.setOpacity(0);
+        horizontalLineClickBox.endXProperty().bind(horizontalLine.endXProperty());
+        horizontalLineClickBox.endYProperty().bind(horizontalLine.endYProperty());
+        horizontalLineClickBox.startXProperty().bind(horizontalLine.startXProperty());
+        horizontalLineClickBox.startYProperty().bind(horizontalLine.startYProperty());
+        horizontalLineClickBox.setOnMouseClicked((event) -> {
+            if (this.isTemp) {
+                return;
+            }
             LineConnectionPoint lineConnectionPoint = new LineConnectionPoint(screen, source.getRoot(), horizontalLine, this, (float) ((event.getX() - horizontalLine.getStartX()) / (horizontalLine.getEndX() - horizontalLine.getStartX())), 1);
             MainController.instance.setPickedConnection(lineConnectionPoint, false);
             lineConnectionPoints.add(lineConnectionPoint);
@@ -59,7 +85,9 @@ public class ConnectionLine {
             resetColor();
         }
 
-        screen.getChildren().addAll(verticalLine, horizontalLine);
+        screen.getChildren().addAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
+        verticalLineClickBox.toBack();
+        horizontalLineClickBox.toBack();
         verticalLine.toBack();
         horizontalLine.toBack();
     }
@@ -149,8 +177,7 @@ public class ConnectionLine {
             }
         }
 
-        screen.getChildren().remove(verticalLine);
-        screen.getChildren().remove(horizontalLine);
+        screen.getChildren().removeAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
 
         for (LineConnectionPoint lineConnectionPoint : lineConnectionPoints) {
             lineConnectionPoint.remove(true);
@@ -158,13 +185,18 @@ public class ConnectionLine {
     }
 
     public void setDestination(ConnectionPoint destination) {
-        this.destination = destination;
+        if (destination.isInput()) {
+            this.destination = destination;
+            return;
+        }
+
+        this.destination = source;
+        this.source = destination;
     }
 
     public void remove() {
         if (isTemp) {
-            screen.getChildren().remove(verticalLine);
-            screen.getChildren().remove(horizontalLine);
+            screen.getChildren().removeAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
             return;
         }
 
@@ -176,8 +208,7 @@ public class ConnectionLine {
             destination.setConnection(null, null);
         }
 
-        screen.getChildren().remove(verticalLine);
-        screen.getChildren().remove(horizontalLine);
+        screen.getChildren().removeAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
 
         if (source instanceof LineConnectionPoint) {
             source.remove();
@@ -196,6 +227,8 @@ public class ConnectionLine {
         horizontalLine.setStroke(Color.web("#0000ff"));
         verticalLine.setStroke(Color.web("#0000ff"));
 
+        horizontalLineClickBox.setOpacity(1);
+        verticalLineClickBox.setOpacity(1);
         for (LineConnectionPoint lineConnectionPoint : lineConnectionPoints) {
             lineConnectionPoint.show();
         }
@@ -205,6 +238,8 @@ public class ConnectionLine {
         horizontalLine.setStroke(Color.web("#3a4450"));
         verticalLine.setStroke(Color.web("#3a4450"));
 
+        horizontalLineClickBox.setOpacity(0);
+        verticalLineClickBox.setOpacity(0);
         for (LineConnectionPoint lineConnectionPoint : lineConnectionPoints) {
             lineConnectionPoint.hide();
         }
