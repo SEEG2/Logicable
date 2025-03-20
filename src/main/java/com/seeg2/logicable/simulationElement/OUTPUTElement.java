@@ -82,6 +82,7 @@ public class OUTPUTElement extends SceneElement {
         updateCircleColor();
 
         screen.getChildren().add(valueCircle);
+        valueCircle.toBack();
     }
 
     public void setPosition(double x, double y) {

@@ -38,7 +38,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
                 removeConnection();
                 return;
             }
-
+            
             MainController.instance.setPickedConnection(this, false);
             action.consume();
         });

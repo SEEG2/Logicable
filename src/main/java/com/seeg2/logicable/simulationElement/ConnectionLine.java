@@ -100,7 +100,7 @@ public class ConnectionLine {
         for (LineConnectionPoint lineConnectionPoint : lineConnectionPoints) {
             ConnectionLine nextConnection = lineConnectionPoint.getConnection();
             if (nextConnection != null) {
-                nextConnection.pushValue(source, value);
+                nextConnection.pushValue(lineConnectionPoint, value);
             }
         }
 

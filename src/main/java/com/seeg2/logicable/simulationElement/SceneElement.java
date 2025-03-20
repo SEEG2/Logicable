@@ -1,6 +1,7 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
+import javafx.scene.Cursor;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.Glow;
