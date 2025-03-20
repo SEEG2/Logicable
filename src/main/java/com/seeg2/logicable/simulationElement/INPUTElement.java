@@ -1,5 +1,6 @@
 package com.seeg2.logicable.simulationElement;
 
+import com.seeg2.logicable.controller.MainController;
 import com.seeg2.logicable.logger.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.scene.image.Image;
@@ -104,6 +105,11 @@ public class INPUTElement extends SceneElement {
     }
 
     public void setPosition(double x, double y) {
+        if (MainController.shouldSnapToGrid()) {
+            x = Math.round(x / 30) * 30;
+            y = Math.round(y / 30) * 30;
+        }
+
         SPRITE.setLayoutX(x);
         SPRITE.setLayoutY(y);
 
@@ -143,4 +149,11 @@ public class INPUTElement extends SceneElement {
     }
 
     public void pushValue(ConnectionPoint source, boolean value) {}
+
+    public void snapToGrid() {
+        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / 30) * 30);
+        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / 30) * 30);
+
+        output.update();
+    }
 }

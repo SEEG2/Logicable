@@ -24,6 +24,10 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Tools">
             <items>
+                <MenuItem mnemonicParsing="false" onAction="#toggleSnapToGrid" text="Toggle Snap To Grid">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="B" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    </accelerator></MenuItem>
               <MenuItem mnemonicParsing="false" onAction="#showLogClicked" text="Show Log">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />

@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private static SceneElement payload;
     private static SceneElement selectedElement;
+    private static boolean snapToGrid;
     private final static ArrayList<SceneElement> sceneElements = new ArrayList<>();
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     public static MainController instance;
@@ -63,6 +64,17 @@ public class MainController implements Initializable {
         }
 
         sceneElements.clear();
+    }
+
+    @FXML
+    public void toggleSnapToGrid() {
+        snapToGrid ^= true;
+
+        if (snapToGrid) {
+            for (SceneElement element : sceneElements) {
+                element.snapToGrid();
+            }
+        }
     }
 
     @FXML
@@ -343,5 +355,9 @@ public class MainController implements Initializable {
 
     public static boolean isDebugMode() {
         return isDebugMode;
+    }
+
+    public static boolean shouldSnapToGrid() {
+        return snapToGrid;
     }
 }

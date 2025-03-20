@@ -16,9 +16,7 @@ public class ANDElement extends GateElement {
         } catch (Exception e) {
             Logger.error("Failed to load AND-sprite");
         }
-
-        this.
-        initSprite();
+        this.initSprite();
     }
 
     protected boolean calcValueForInputs(boolean value1, boolean value2) {

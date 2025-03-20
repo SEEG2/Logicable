@@ -34,6 +34,10 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
 
         boundCircle.setOnMouseClicked((action) -> {
+            if (!root.isActive) {
+                return;
+            }
+
             if (!MainController.instance.isConnectionPicked() && this.connection != null) {
                 removeConnection();
                 return;

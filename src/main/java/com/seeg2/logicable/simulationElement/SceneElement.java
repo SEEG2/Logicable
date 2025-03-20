@@ -48,4 +48,5 @@ public abstract class SceneElement {
     public abstract void hideConnectionPoints();
     public abstract void remove();
     public abstract void setPosition(double x, double y);
+    public abstract void snapToGrid();
 }
