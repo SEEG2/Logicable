@@ -3,6 +3,7 @@ package com.seeg2.logicable;
 import com.seeg2.logicable.logger.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -20,9 +21,15 @@ public class Application extends javafx.application.Application {
         stage.setMinWidth(720);
         stage.setMinHeight(480);
         stage.setTitle(APPLICATION_NAME);
+        try {
+            stage.getIcons().add(new Image(getClass().getResource("/images/icon.png").toExternalForm())); // JavaFX does not support .ico files
+        } catch (Exception e) {
+            Logger.error("Failed to load application icon");
+        }
         stage.setScene(scene);
         stage.show();
         Logger.info("Window created");
+
     }
 
     public static void main(String[] args) {

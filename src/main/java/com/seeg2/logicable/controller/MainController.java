@@ -113,7 +113,6 @@ public class MainController implements Initializable {
         payload.setPosition(mouseX, Math.min(bottomBar.getLayoutY() - payload.SPRITE.getFitHeight(), mouseY));
     }
 
-    // TODO add functionality to for input/output/not -> not-gate code is just a place holder
     @FXML
     public void OUTPUTClicked() {
         if (payload != null) {
@@ -280,7 +279,16 @@ public class MainController implements Initializable {
         }
 
         if (connectionPoint.isInput() == pickedConnection.isInput()) {
+            if (pickedConnection instanceof LineConnectionPoint) {
+                pickedConnection.remove();
+            }
+
+            if (connectionPoint instanceof LineConnectionPoint) {
+                connectionPoint.remove();
+            }
+
             pickedConnection = null;
+
 
             if (connectionLineTemp != null) {
                 connectionLineTemp.remove();

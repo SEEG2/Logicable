@@ -197,6 +197,13 @@ public class ConnectionLine {
     public void remove() {
         if (isTemp) {
             screen.getChildren().removeAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
+            if (source instanceof LineConnectionPoint) {
+                source.remove();
+            }
+
+            if (destination instanceof LineConnectionPoint) {
+                destination.remove();
+            }
             return;
         }
 
