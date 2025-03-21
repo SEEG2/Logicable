@@ -85,6 +85,8 @@ public class OUTPUTElement extends SceneElement {
         valueCircle.setOnMouseClicked(SPRITE.getOnMouseClicked());
         valueCircle.setOnMousePressed(SPRITE.getOnMousePressed());
         valueCircle.setOnMouseDragged(SPRITE.getOnMouseDragged());
+        initContextMenu(valueCircle);
+
         updateCircleColor();
 
         screen.getChildren().add(valueCircle);

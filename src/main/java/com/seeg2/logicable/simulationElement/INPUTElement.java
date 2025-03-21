@@ -6,13 +6,13 @@ import javafx.beans.binding.Bindings;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 import static javafx.scene.paint.Color.GREEN;
 import static javafx.scene.paint.Color.RED;
 
-// TODO  rework this (just a place holder right now)
 public class INPUTElement extends SceneElement {
     private SceneElementConnectionPoint output;
     private boolean value;
@@ -83,13 +83,20 @@ public class INPUTElement extends SceneElement {
         valueCircle = new Circle(18);
         valueCircle.centerXProperty().bind(Bindings.add(SPRITE.layoutXProperty(), 26f));
         valueCircle.centerYProperty().bind(Bindings.add(SPRITE.layoutYProperty(), Bindings.divide(SPRITE.fitHeightProperty(), 2)));
+        valueCircle.setCursor(Cursor.HAND);
         valueCircle.setOnMouseClicked((event) -> {
             if (circleDragged) {
+                SPRITE.setCursor(Cursor.HAND);
+                valueCircle.setCursor(Cursor.HAND);
                 circleDragged = false;
                 return;
             }
 
+            if (event.getButton() != MouseButton.PRIMARY) {
+                return;
+            }
             value ^= true;
+
             updateCircleColor();
             pushValue();
             event.consume();
@@ -99,6 +106,7 @@ public class INPUTElement extends SceneElement {
             SPRITE.getOnMouseDragged().handle(action);
             circleDragged = true;
         });
+        initContextMenu(valueCircle);
 
         updateCircleColor();
 

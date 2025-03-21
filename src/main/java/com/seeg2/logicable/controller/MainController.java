@@ -263,6 +263,12 @@ public class MainController implements Initializable {
         element.remove();
     }
 
+    public static void addSimulationElement(SceneElement element) {
+        sceneElements.add(element);
+        element.SPRITE.toBack();
+        element.setActive();
+    }
+
     public static void selectSimulationElement(SceneElement element) {
         if (element == selectedElement) {
             return;
