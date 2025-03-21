@@ -3,6 +3,7 @@ package com.seeg2.logicable.simulationElement;
 import com.seeg2.logicable.controller.MainController;
 import com.seeg2.logicable.logger.Logger;
 import javafx.beans.binding.Bindings;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -49,6 +50,8 @@ public class INPUTElement extends SceneElement {
             }
 
             select();
+            SPRITE.setCursor(Cursor.HAND);
+            valueCircle.setCursor(Cursor.HAND);
             action.consume();
         });
 
@@ -69,7 +72,8 @@ public class INPUTElement extends SceneElement {
             }
 
             select();
-
+            SPRITE.setCursor(Cursor.CLOSED_HAND);
+            valueCircle.setCursor(Cursor.CLOSED_HAND);
             setPosition(event.getSceneX() - mouseX, event.getSceneY() - mouseY);
             event.consume();
         });
@@ -92,9 +96,7 @@ public class INPUTElement extends SceneElement {
         });
         valueCircle.setOnMousePressed(SPRITE.getOnMousePressed());
         valueCircle.setOnMouseDragged((action) -> {
-            if (SPRITE.getOnMouseDragged() != null) {
-                SPRITE.getOnMouseDragged().handle(action);
-            }
+            SPRITE.getOnMouseDragged().handle(action);
             circleDragged = true;
         });
 

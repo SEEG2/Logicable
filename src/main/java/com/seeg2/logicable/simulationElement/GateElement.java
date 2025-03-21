@@ -1,6 +1,7 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
+import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 
 import static java.lang.Math.ceil;
@@ -48,6 +49,7 @@ public abstract class GateElement extends SceneElement {
             }
 
             select();
+            SPRITE.setCursor(Cursor.HAND);
             action.consume();
         });
 
@@ -68,7 +70,7 @@ public abstract class GateElement extends SceneElement {
             }
 
             select();
-
+            SPRITE.setCursor(Cursor.CLOSED_HAND);
             setPosition(event.getSceneX() - mouseX, event.getSceneY() - mouseY);
             event.consume();
         });

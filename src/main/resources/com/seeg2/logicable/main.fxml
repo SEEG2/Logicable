@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.input.*?>
@@ -46,6 +47,9 @@
             </items>
           </Menu>
         </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </MenuBar>
       <ButtonBar fx:id="bottomBar" layoutY="540.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="58.0" prefWidth="960.0" style="-fx-background-color: #BBBBBB;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <buttons>
@@ -94,6 +98,9 @@
                      <Image url="@../../../images/logic_gates/INPUT.png" />
                  </image>
              </ImageView>
-         </buttons></ButtonBar>
+         </buttons>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor></ButtonBar>
    </children>
 </AnchorPane>

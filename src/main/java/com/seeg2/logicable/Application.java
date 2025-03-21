@@ -2,6 +2,7 @@ package com.seeg2.logicable;
 
 import com.seeg2.logicable.logger.Logger;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

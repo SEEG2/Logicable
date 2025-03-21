@@ -1,6 +1,7 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
+import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -49,6 +50,7 @@ public class ConnectionLine {
         verticalLineClickBox.endYProperty().bind(verticalLine.endYProperty());
         verticalLineClickBox.startYProperty().bind(verticalLine.startYProperty());
         verticalLineClickBox.startXProperty().bind(verticalLine.startXProperty());
+        verticalLineClickBox.setCursor(Cursor.CROSSHAIR);
         verticalLineClickBox.setOnMouseClicked((event -> {
             if (this.isTemp) {
                 return;
@@ -69,6 +71,7 @@ public class ConnectionLine {
         horizontalLineClickBox.endYProperty().bind(horizontalLine.endYProperty());
         horizontalLineClickBox.startXProperty().bind(horizontalLine.startXProperty());
         horizontalLineClickBox.startYProperty().bind(horizontalLine.startYProperty());
+        horizontalLineClickBox.setCursor(Cursor.CROSSHAIR);
         horizontalLineClickBox.setOnMouseClicked((event) -> {
             if (this.isTemp) {
                 return;

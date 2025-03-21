@@ -1,6 +1,7 @@
 package com.seeg2.logicable.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
+import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +22,7 @@ public class LineConnectionPoint implements ConnectionPoint {
         this.origin = origin;
 
         boundCircle = new Circle(9, Color.GREEN);
+        boundCircle.setCursor(Cursor.CROSSHAIR);
 
         if (!MainController.isDebugMode()) {
             this.hide();

@@ -41,6 +41,7 @@ public abstract class SceneElement {
 
     public void setActive() {
         isActive = true;
+        SPRITE.setCursor(Cursor.HAND);
     }
     public abstract void showConnectionPoints();
     public abstract void pushValue();
