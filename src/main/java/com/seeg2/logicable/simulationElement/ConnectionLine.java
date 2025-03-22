@@ -89,10 +89,10 @@ public class ConnectionLine {
         }
 
         screen.getChildren().addAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
-        verticalLineClickBox.toBack();
-        horizontalLineClickBox.toBack();
-        verticalLine.toBack();
-        horizontalLine.toBack();
+        verticalLineClickBox.setViewOrder(2);
+        horizontalLineClickBox.setViewOrder(2);
+        verticalLine.setViewOrder(2);
+        horizontalLine.setViewOrder(2);
     }
 
     public void pushValue(ConnectionPoint source, boolean value) {
@@ -172,6 +172,7 @@ public class ConnectionLine {
 
     public void remove(ConnectionPoint connectionPoint) {
         if (connectionPoint == source) {
+            destination.getRoot().pushValue(source, false);
             destination.setConnection(null, null);
         } else {
             source.setConnection(null, null);
@@ -179,6 +180,7 @@ public class ConnectionLine {
                 source.remove();
             }
         }
+
 
         screen.getChildren().removeAll(verticalLine, horizontalLine, verticalLineClickBox, horizontalLineClickBox);
 
@@ -215,6 +217,7 @@ public class ConnectionLine {
         }
 
         if (destination != null) {
+            destination.getRoot().pushValue(source, false);
             destination.setConnection(null, null);
         }
 
@@ -257,6 +260,10 @@ public class ConnectionLine {
 
     public void setToNotTemp() {
         isTemp = false;
+        verticalLineClickBox.setViewOrder(1.5);
+        horizontalLineClickBox.setViewOrder(1.5);
+        verticalLine.setViewOrder(1.5);
+        horizontalLine.setViewOrder(1.5);
     }
 
     public void setInvert(boolean invert) {

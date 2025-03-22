@@ -50,7 +50,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         });
 
         screen.getChildren().add(boundCircle);
-        boundCircle.toFront();
+        boundCircle.setViewOrder(-2);
     }
 
     public Circle getCircle() {

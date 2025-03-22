@@ -111,7 +111,7 @@ public class INPUTElement extends SceneElement {
         updateCircleColor();
 
         screen.getChildren().add(valueCircle);
-        valueCircle.toBack();
+        valueCircle.setViewOrder(-1);
     }
 
     public void setPosition(double x, double y) {
@@ -135,9 +135,6 @@ public class INPUTElement extends SceneElement {
     }
 
     public void remove() {
-        value = false;
-        pushValue();
-
         screen.getChildren().remove(SPRITE);
         screen.getChildren().remove(valueCircle);
 
@@ -160,9 +157,9 @@ public class INPUTElement extends SceneElement {
 
     public void pushValue(ConnectionPoint source, boolean value) {}
 
-    public void snapToGrid() {
-        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / 30) * 30);
-        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / 30) * 30);
+    public void snapToGrid(int gridSize) {
+        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
+        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 
         output.update();
     }

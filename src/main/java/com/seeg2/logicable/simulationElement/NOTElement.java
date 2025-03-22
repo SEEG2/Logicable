@@ -94,7 +94,6 @@ public class NOTElement extends SceneElement {
     }
 
     public void remove() {
-        pushValue(output, true);
         screen.getChildren().remove(SPRITE);
 
         input.remove();
@@ -115,9 +114,9 @@ public class NOTElement extends SceneElement {
         }
     }
 
-    public void snapToGrid() {
-        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / 30) * 30);
-        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / 30) * 30);
+    public void snapToGrid(int gridSize) {
+        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
+        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 
         input.update();
         output.update();

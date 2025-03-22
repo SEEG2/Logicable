@@ -77,9 +77,6 @@ public abstract class GateElement extends SceneElement {
     }
 
     public void remove() {
-        if (output.getConnection() != null) {
-            output.getConnection().pushValue(output, false);
-        }
         screen.getChildren().remove(SPRITE);
 
         input1.remove();
@@ -117,9 +114,9 @@ public abstract class GateElement extends SceneElement {
         }
     }
 
-    public void snapToGrid() {
-        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / 30) * 30);
-        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / 30) * 30);
+    public void snapToGrid(int gridSize) {
+        SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
+        SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 
         input1.update();
         input2.update();

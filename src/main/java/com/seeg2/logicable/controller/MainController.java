@@ -3,6 +3,8 @@ package com.seeg2.logicable.controller;
 import com.seeg2.logicable.Application;
 import com.seeg2.logicable.logger.Logger;
 import com.seeg2.logicable.simulationElement.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +13,11 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -24,19 +30,26 @@ public class MainController implements Initializable {
     private static boolean snapToGrid;
     private final static ArrayList<SceneElement> sceneElements = new ArrayList<>();
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
+    private final static ArrayList<Line> gridLines = new ArrayList<>();
     public static MainController instance;
     private static ConnectionPoint pickedConnection;
     private ConnectionLine connectionLineTemp;
+    private final int gridSize = 30;
     private double mouseX, mouseY;
     private static boolean isDebugMode;
     @FXML
     private AnchorPane screen;
+    @FXML
+    private AnchorPane root;
     @FXML
     public ButtonBar bottomBar;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
+        screen.prefHeightProperty().bind(root.heightProperty().subtract(bottomBar.heightProperty()));
+        screen.prefWidthProperty().bind(root.widthProperty());
+
         screen.setOnMouseMoved(event -> {
             mouseX = event.getX();
             mouseY = event.getY();
@@ -55,6 +68,8 @@ public class MainController implements Initializable {
         });
 
         screen.setOnKeyPressed(this::handleKeyPress);
+
+        initGridLines();
     }
 
     @FXML
@@ -72,8 +87,102 @@ public class MainController implements Initializable {
 
         if (snapToGrid) {
             for (SceneElement element : sceneElements) {
-                element.snapToGrid();
+                element.snapToGrid(gridSize);
             }
+            showGridLines();
+            return;
+        }
+
+        hideGridLines();
+    }
+
+    private void initGridLines() {
+        for (Line line : gridLines) {
+            screen.getChildren().remove(line);
+        }
+        gridLines.clear();
+
+        screen.widthProperty().addListener((obs, oldVal, newVal) -> { // We do have to update vertical and horizontal lines, because if stretched to far the other kind of lines might not be created yet
+            gridLines.removeIf(line -> line.getStartX() == line.getEndX());
+            screen.getChildren().removeIf(node -> node instanceof Line && ((Line) node).getStartX() == ((Line) node).getEndX());
+
+            for (double x = 0; x < newVal.doubleValue(); x += gridSize) {
+                Line verticalLine = new Line(x, 0, x, screen.getHeight());
+                verticalLine.setStroke(Color.LIGHTGRAY);
+                gridLines.add(verticalLine);
+                verticalLine.setOpacity(snapToGrid ? 1 : 0);
+                screen.getChildren().add(verticalLine);
+                verticalLine.setViewOrder(2);
+            }
+
+            for (double y = 0; y < screen.getHeight(); y += gridSize) {
+                Line horizontalLine = new Line(0, y, screen.getWidth(), y);
+                horizontalLine.setStroke(Color.LIGHTGRAY);
+                gridLines.add(horizontalLine);
+                horizontalLine.setOpacity(snapToGrid ? 1 : 0);
+                screen.getChildren().add(horizontalLine);
+                horizontalLine.setViewOrder(2);
+            }
+        });
+
+        screen.heightProperty().addListener((obs, oldVal, newVal) -> { // We do have to update vertical and horizontal lines, because if stretched to far the other kind of lines might not be created yet
+            gridLines.removeIf(line -> line.getStartX() == line.getEndX());
+            screen.getChildren().removeIf(node -> node instanceof Line && ((Line) node).getStartX() == ((Line) node).getEndX());
+
+            for (double x = 0; x < screen.getWidth(); x += gridSize) {
+                Line verticalLine = new Line(x, 0, x, screen.getHeight());
+                verticalLine.setStroke(Color.LIGHTGRAY);
+                gridLines.add(verticalLine);
+                verticalLine.setOpacity(snapToGrid ? 1 : 0);
+                screen.getChildren().add(verticalLine);
+                verticalLine.setViewOrder(2);
+            }
+
+            for (double y = 0; y < newVal.doubleValue(); y += gridSize) {
+                Line horizontalLine = new Line(0, y, screen.getWidth(), y);
+                horizontalLine.setStroke(Color.LIGHTGRAY);
+                gridLines.add(horizontalLine);
+                horizontalLine.setOpacity(snapToGrid ? 1 : 0);
+                screen.getChildren().add(horizontalLine);
+                horizontalLine.setViewOrder(2);
+            }
+        });
+
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(100),
+                ae -> {
+                    for (double x = 0; x < screen.getWidth(); x += gridSize) {
+                        Line verticalLine = new Line(x, 0, x, screen.getHeight());
+                        verticalLine.setStroke(Color.LIGHTGRAY);
+                        gridLines.add(verticalLine);
+                        verticalLine.setOpacity(0);
+                        screen.getChildren().add(verticalLine);
+                        verticalLine.setViewOrder(2);
+                    }
+
+                    for (double y = 0; y < screen.getHeight(); y += gridSize) {
+                        Line horizontalLine = new Line(0, y, screen.getWidth(), y);
+                        horizontalLine.setStroke(Color.LIGHTGRAY);
+                        gridLines.add(horizontalLine);
+                        horizontalLine.setOpacity(0);
+                        screen.getChildren().add(horizontalLine);
+                        horizontalLine.setViewOrder(2);
+
+                    }
+                }
+        ));
+        timeline.play();
+    }
+
+    private void showGridLines() {
+        for (Line line : gridLines) {
+            line.setOpacity(1);
+        }
+    }
+
+    private void hideGridLines() {
+        for (Line line : gridLines) {
+            line.setOpacity(0);
         }
     }
 
@@ -201,7 +310,7 @@ public class MainController implements Initializable {
     public void screenClicked() {
         if (payload != null) {
             sceneElements.add(payload);
-            payload.SPRITE.toBack();
+            payload.SPRITE.setViewOrder(-1);
             payload.setActive();
             payload = null;
         }
@@ -265,7 +374,7 @@ public class MainController implements Initializable {
 
     public static void addSimulationElement(SceneElement element) {
         sceneElements.add(element);
-        element.SPRITE.toBack();
+        element.SPRITE.setViewOrder(-1);
         element.setActive();
     }
 

@@ -44,7 +44,7 @@ public class LineConnectionPoint implements ConnectionPoint {
         });
 
         screen.getChildren().add(boundCircle);
-        boundCircle.toFront();
+        boundCircle.setViewOrder(-2);
     }
 
     public Circle getCircle() {
