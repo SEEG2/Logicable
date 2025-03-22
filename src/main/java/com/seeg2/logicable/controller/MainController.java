@@ -23,6 +23,8 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
     private static SceneElement payload;
@@ -97,14 +99,9 @@ public class MainController implements Initializable {
     }
 
     private void initGridLines() {
-        for (Line line : gridLines) {
-            screen.getChildren().remove(line);
-        }
-        gridLines.clear();
-
         screen.widthProperty().addListener((obs, oldVal, newVal) -> { // We do have to update vertical and horizontal lines, because if stretched to far the other kind of lines might not be created yet
-            gridLines.removeIf(line -> line.getStartX() == line.getEndX());
-            screen.getChildren().removeIf(node -> node instanceof Line && ((Line) node).getStartX() == ((Line) node).getEndX());
+            screen.getChildren().removeAll(gridLines);
+            gridLines.clear();
 
             for (double x = 0; x < newVal.doubleValue(); x += gridSize) {
                 Line verticalLine = new Line(x, 0, x, screen.getHeight());
@@ -126,8 +123,8 @@ public class MainController implements Initializable {
         });
 
         screen.heightProperty().addListener((obs, oldVal, newVal) -> { // We do have to update vertical and horizontal lines, because if stretched to far the other kind of lines might not be created yet
-            gridLines.removeIf(line -> line.getStartX() == line.getEndX());
-            screen.getChildren().removeIf(node -> node instanceof Line && ((Line) node).getStartX() == ((Line) node).getEndX());
+            screen.getChildren().removeAll(gridLines);
+            gridLines.clear();
 
             for (double x = 0; x < screen.getWidth(); x += gridSize) {
                 Line verticalLine = new Line(x, 0, x, screen.getHeight());
@@ -167,7 +164,6 @@ public class MainController implements Initializable {
                         horizontalLine.setOpacity(0);
                         screen.getChildren().add(horizontalLine);
                         horizontalLine.setViewOrder(2);
-
                     }
                 }
         ));
