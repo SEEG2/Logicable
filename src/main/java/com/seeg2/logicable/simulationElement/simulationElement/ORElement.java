@@ -1,6 +1,7 @@
-package com.seeg2.logicable.simulationElement;
+package com.seeg2.logicable.simulationElement.simulationElement;
 
 import com.seeg2.logicable.logger.Logger;
+import com.seeg2.logicable.simulationElement.simulationElement.GateElement;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;

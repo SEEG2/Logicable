@@ -1,4 +1,4 @@
-package com.seeg2.logicable.simulationElement;
+package com.seeg2.logicable.simulationElement.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
 import javafx.beans.binding.Bindings;
@@ -9,18 +9,18 @@ import javafx.scene.shape.Circle;
 
 public class SceneElementConnectionPoint implements ConnectionPoint {
     private Pane screen;
-    private SceneElement root;
+    private SimulationElement root;
     private Circle boundCircle;
     // true -> input; false -> output
     private boolean isInput;
     private ConnectionLine connection;
     private ConnectionPoint otherConnectionPoint;
 
-    public SceneElementConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset) {
+    public SceneElementConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset) {
         this(screen, root, xOffset, yOffset, true);
     }
 
-    public SceneElementConnectionPoint(Pane screen, SceneElement root, float xOffset, float yOffset, boolean isInput) {
+    public SceneElementConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset, boolean isInput) {
         this.screen = screen;
         this.root = root;
         this.isInput = isInput;
@@ -91,7 +91,7 @@ public class SceneElementConnectionPoint implements ConnectionPoint {
         return isInput;
     }
 
-    public SceneElement getRoot() {
+    public SimulationElement getRoot() {
         return root;
     }
 

@@ -3,42 +3,44 @@ package com.seeg2.logicable.controller;
 import com.seeg2.logicable.Application;
 import com.seeg2.logicable.logger.Logger;
 import com.seeg2.logicable.simulationElement.*;
+import com.seeg2.logicable.simulationElement.simulationElement.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBar;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 public class MainController implements Initializable {
-    private static SceneElement payload;
+    private static SimulationElement payload;
     private static SceneElement selectedElement;
     private static boolean snapToGrid;
     private final static ArrayList<SceneElement> sceneElements = new ArrayList<>();
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     private final static ArrayList<Line> gridLines = new ArrayList<>();
     public static MainController instance;
-    private static ConnectionPoint pickedConnection;
+    private ConnectionPoint pickedConnection;
     private ConnectionLine connectionLineTemp;
-    private final int gridSize = 30;
+    private static final int gridSize = 30;
     private double mouseX, mouseY;
     private static boolean isDebugMode;
+    private ContextMenu contextMenu;
     @FXML
     private AnchorPane screen;
     @FXML
@@ -71,6 +73,7 @@ public class MainController implements Initializable {
 
         screen.setOnKeyPressed(this::handleKeyPress);
 
+        initContextMenu();
         initGridLines();
     }
 
@@ -96,6 +99,35 @@ public class MainController implements Initializable {
         }
 
         hideGridLines();
+    }
+
+    private void initContextMenu() {
+        contextMenu = new ContextMenu();
+        MenuItem textItem = new MenuItem("New Text");
+        textItem.setOnAction(event -> showNewTextMenu(mouseX, mouseY));
+        contextMenu.getItems().addAll(textItem);
+        screen.setOnContextMenuRequested(event -> contextMenu.show(screen, event.getScreenX(), event.getScreenY()));
+    }
+
+        private void showNewTextMenu(double mouseX, double mouseY) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New Text");
+        dialog.setHeaderText("Enter the text:");
+        dialog.setContentText("Text:");
+
+        // Remove the question mark image
+        dialog.setGraphic(null);
+
+        // Add a checkbox for bold text
+        CheckBox boldCheckBox = new CheckBox("Bold");
+        VBox vbox = new VBox(dialog.getDialogPane().getContent(), boldCheckBox);
+        dialog.getDialogPane().setContent(vbox);
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(text -> {
+            boolean isBold = boldCheckBox.isSelected();
+            addSceneElement(new TextElement(mouseX, mouseY, text, screen, isBold));
+        });
     }
 
     private void initGridLines() {
@@ -304,6 +336,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void screenClicked() {
+        if (contextMenu != null) {
+            contextMenu.hide();
+        }
+
         if (payload != null) {
             sceneElements.add(payload);
             payload.SPRITE.setViewOrder(-1);
@@ -312,7 +348,7 @@ public class MainController implements Initializable {
         }
 
         if (selectedElement != null) {;
-            selectSimulationElement(null);
+            selectSceneElement(null);
         }
 
         pickedConnection = null;
@@ -327,10 +363,10 @@ public class MainController implements Initializable {
     public void toggleDebugMode() {
         if (isDebugMode) {
             for (SceneElement element : sceneElements) {
-                element.hideConnectionPoints();
+                element.debugOff();
             }
             if (payload != null) {
-                payload.hideConnectionPoints();
+                payload.debugOff();
             }
 
             for (ConnectionLine line : connections) {
@@ -342,10 +378,10 @@ public class MainController implements Initializable {
             }
         } else {
             for (SceneElement element : sceneElements) {
-                element.showConnectionPoints();
+                element.debugOn();
             }
             if (payload != null) {
-                payload.showConnectionPoints();
+                payload.debugOn();
             }
 
             for (ConnectionLine line : connections) {
@@ -359,7 +395,7 @@ public class MainController implements Initializable {
         isDebugMode ^= true;
     }
 
-    public static void removeSimulationElement(SceneElement element) {
+    public static void removeSceneElement(SceneElement element) {
         if (selectedElement == element) {
             selectedElement = null;
         }
@@ -368,13 +404,12 @@ public class MainController implements Initializable {
         element.remove();
     }
 
-    public static void addSimulationElement(SceneElement element) {
+    public static void addSceneElement(SceneElement element) {
         sceneElements.add(element);
-        element.SPRITE.setViewOrder(-1);
         element.setActive();
     }
 
-    public static void selectSimulationElement(SceneElement element) {
+    public static void selectSceneElement(SceneElement element) {
         if (element == selectedElement) {
             return;
         }
@@ -389,7 +424,7 @@ public class MainController implements Initializable {
     private void handleKeyPress(KeyEvent event) {
         if (selectedElement != null) {
             if (event.getCode() == KeyCode.DELETE || (event.getCode() == KeyCode.D && event.isControlDown())) {
-                removeSimulationElement(selectedElement);
+                removeSceneElement(selectedElement);
             }
         }
     }

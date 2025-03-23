@@ -10,4 +10,5 @@ module com.seeg2.logicable {
     exports com.seeg2.logicable.logger;
     exports com.seeg2.logicable.simulationElement;
     opens com.seeg2.logicable.controller to javafx.fxml;
+    exports com.seeg2.logicable.simulationElement.simulationElement;
 }

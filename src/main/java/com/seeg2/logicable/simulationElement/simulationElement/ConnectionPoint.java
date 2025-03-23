@@ -1,9 +1,9 @@
-package com.seeg2.logicable.simulationElement;
+package com.seeg2.logicable.simulationElement.simulationElement;
 
 import javafx.scene.shape.Circle;
 
 public interface ConnectionPoint {
-    SceneElement getRoot();
+    SimulationElement getRoot();
     ConnectionPoint getOtherConnectionPoint();
     void removeConnection();
     ConnectionLine getConnection();

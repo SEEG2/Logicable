@@ -1,4 +1,4 @@
-package com.seeg2.logicable.simulationElement;
+package com.seeg2.logicable.simulationElement.simulationElement;
 
 import com.seeg2.logicable.controller.MainController;
 import javafx.scene.Cursor;
@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 
 import static java.lang.Math.ceil;
 
-public abstract class GateElement extends SceneElement {
+public abstract class GateElement extends SimulationElement {
     protected SceneElementConnectionPoint input1, input2, output;
     protected boolean cached1, cached2;
     protected GateElement(Pane screen) {
@@ -84,13 +84,13 @@ public abstract class GateElement extends SceneElement {
         output.remove();
     }
 
-    public void showConnectionPoints() {
+    public void debugOn() {
         input1.show();
         input2.show();
         output.show();
     }
 
-    public void hideConnectionPoints() {
+    public void debugOff() {
         input1.hide();
         input2.hide();
         output.hide();
