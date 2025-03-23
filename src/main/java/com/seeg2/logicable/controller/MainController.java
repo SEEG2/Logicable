@@ -484,11 +484,16 @@ public class MainController implements Initializable {
         connectionPoint.setConnection(connectionLineTemp, pickedConnection);
         connectionLineTemp.updatePos();
 
-        if (connectionPoint.isInput()) {
-            pickedConnection.getRoot().pushValue();
+        if (connectionPoint instanceof LineConnectionPoint point) {
+            point.getRoot().pushValue();
         } else {
-            connectionPoint.getRoot().pushValue();
+            if (connectionPoint.isInput()) {
+                pickedConnection.getRoot().pushValue();
+            } else {
+                connectionPoint.getRoot().pushValue();
+            }
         }
+
 
         connectionLineTemp = null;
         pickedConnection = null;
