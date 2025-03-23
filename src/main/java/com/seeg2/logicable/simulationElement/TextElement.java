@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import static com.seeg2.logicable.controller.MainController.gridSize;
 import static javafx.scene.text.Font.font;
 
 public class TextElement extends SceneElement{
@@ -19,20 +20,24 @@ public class TextElement extends SceneElement{
     private final boolean isBold;
 
     public TextElement(double x, double y, String message, Pane screen) {
-        this(x, x, message, screen, false);
+        this(x, y, message, screen, false);
     }
 
     public TextElement(double x, double y, String message, Pane screen, boolean isBold) {
         this.screen = screen;
         this.isBold = isBold;
 
-        text = new Text(x, y, message);
+        text = new Text(x, y, message); // For some reason using LayoutX/Y for the text is buggy
         if (isBold) {
             text.setFont(font("System", javafx.scene.text.FontWeight.BOLD, 20));
         } else {
             text.setFont(font("System", FontWeight.NORMAL, 20));
         }
         screen.getChildren().add(text);
+
+        if (MainController.shouldSnapToGrid()) {
+            snapToGrid();
+        }
 
         text.setOnMouseClicked((action) -> {
             if (!this.isActive) {
@@ -49,8 +54,8 @@ public class TextElement extends SceneElement{
                 return;
             }
 
-            mouseX = event.getSceneX() - text.getLayoutX();
-            mouseY = event.getSceneY() - text.getLayoutY();
+            mouseX = event.getSceneX() - text.getX();
+            mouseY = event.getSceneY() - text.getY();
 
             event.consume();
         });
@@ -75,18 +80,18 @@ public class TextElement extends SceneElement{
     @Override
     public void setPosition(double x, double y) {
         if (MainController.shouldSnapToGrid()) {
-            x = Math.round(x / 30) * 30;
-            y = Math.round(y / 30) * 30;
+            x = Math.round(x / gridSize) * gridSize;
+            y = Math.round(y / gridSize) * gridSize;
         }
 
-        text.setLayoutX(x);
-        text.setLayoutY(y);
+        text.setX(x);
+        text.setY(y);
     }
 
     @Override
-    public void snapToGrid(int gridSize) {
-        text.setLayoutX(Math.round(text.getLayoutX() / gridSize) * gridSize);
-        text.setLayoutY(Math.round(text.getLayoutY() / gridSize) * gridSize);
+    public void snapToGrid() {
+        text.setX(Math.round(text.getX() / gridSize) * gridSize);
+        text.setY(Math.round(text.getY() / gridSize) * gridSize);
     }
 
     @Override
@@ -125,18 +130,9 @@ public class TextElement extends SceneElement{
 
     @Override
     public void copyElement() {
-        TextElement copy;
-        try {
-            if (MainController.shouldSnapToGrid()) {
-                copy = new TextElement(this.text.getLayoutX() + 15, this.text.getLayoutY() + 15, text.getText(), screen, isBold);
-            } else {
-                copy = new TextElement(this.text.getLayoutX() + 10, this.text.getLayoutY() + 10, text.getText(), screen, isBold);
-            }
+        TextElement copy = new TextElement(this.text.getX() + 10, this.text.getY() + 10, text.getText(), screen, isBold);
+        MainController.addSceneElement(copy);
+        copy.select();
 
-            MainController.addSceneElement(copy);
-            copy.select();
-        } catch (Exception e) {
-            Logger.error("Failed to create a copy of a scene element");
-        }
     }
 }

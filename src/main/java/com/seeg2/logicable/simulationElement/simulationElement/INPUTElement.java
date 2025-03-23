@@ -10,6 +10,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
+import static com.seeg2.logicable.controller.MainController.gridSize;
 import static javafx.scene.paint.Color.GREEN;
 import static javafx.scene.paint.Color.RED;
 
@@ -116,8 +117,8 @@ public class INPUTElement extends SimulationElement {
 
     public void setPosition(double x, double y) {
         if (MainController.shouldSnapToGrid()) {
-            x = Math.round(x / 30) * 30;
-            y = Math.round(y / 30) * 30;
+            x = Math.round(x / gridSize) * gridSize;
+            y = Math.round(y / gridSize) * gridSize;
         }
 
         SPRITE.setLayoutX(x);
@@ -157,7 +158,7 @@ public class INPUTElement extends SimulationElement {
 
     public void pushValue(ConnectionPoint source, boolean value) {}
 
-    public void snapToGrid(int gridSize) {
+    public void snapToGrid() {
         SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
         SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 

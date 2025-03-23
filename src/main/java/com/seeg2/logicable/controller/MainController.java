@@ -37,7 +37,7 @@ public class MainController implements Initializable {
     public static MainController instance;
     private ConnectionPoint pickedConnection;
     private ConnectionLine connectionLineTemp;
-    private static final int gridSize = 30;
+    public static final int gridSize = 30;
     private double mouseX, mouseY;
     private static boolean isDebugMode;
     private ContextMenu contextMenu;
@@ -92,7 +92,7 @@ public class MainController implements Initializable {
 
         if (snapToGrid) {
             for (SceneElement element : sceneElements) {
-                element.snapToGrid(gridSize);
+                element.snapToGrid();
             }
             showGridLines();
             return;

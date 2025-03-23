@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import static com.seeg2.logicable.controller.MainController.gridSize;
+
 // TODO  rework this (just a place holder right now)
 public class NOTElement extends SimulationElement {
     private SceneElementConnectionPoint input, output;
@@ -72,8 +74,8 @@ public class NOTElement extends SimulationElement {
 
     public void setPosition(double x, double y) {
         if (MainController.shouldSnapToGrid()) {
-            x = Math.round(x / 30) * 30;
-            y = Math.round(y / 30) * 30;
+            x = Math.round(x / gridSize) * gridSize;
+            y = Math.round(y / gridSize) * gridSize;
         }
 
         SPRITE.setLayoutX(x);
@@ -114,7 +116,7 @@ public class NOTElement extends SimulationElement {
         }
     }
 
-    public void snapToGrid(int gridSize) {
+    public void snapToGrid() {
         SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
         SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 

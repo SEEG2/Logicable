@@ -11,7 +11,7 @@ public abstract class SceneElement {
 
     public abstract void remove();
     public abstract void setPosition(double x, double y);
-    public abstract void snapToGrid(int gridSize);
+    public abstract void snapToGrid();
     public abstract void select();
     public abstract void deselect();
     public abstract void debugOn();
