@@ -13,6 +13,7 @@ import static com.seeg2.logicable.controller.MainController.gridSize;
 public class NOTElement extends SimulationElement {
     private SceneElementConnectionPoint input, output;
     private boolean cached;
+    private boolean isProcessing;
 
     public NOTElement(Pane screen) {
         super(screen);
@@ -103,17 +104,35 @@ public class NOTElement extends SimulationElement {
     }
 
     public void pushValue() {
-        if (output.getConnection() != null) {
-            output.getConnection().pushValue(output, !cached);
+        isProcessing = true;
+
+        try {
+            if (output.getConnection() != null) {
+                output.getConnection().pushValue(output, !cached);
+            }
+        } finally {
+            isProcessing = false;
         }
     }
 
     public void pushValue(ConnectionPoint source, boolean value) {
-        cached = value;
-
-        if (output.getConnection() != null) {
-            output.getConnection().pushValue(output, !cached);
+        if (isProcessing) {
+            return;
         }
+
+        try {
+            isProcessing = true;
+            if (cached == value) {
+                return;
+            }
+            cached = value;
+            if (output.getConnection() != null) {
+                output.getConnection().pushValue(output, !cached);
+            }
+        } finally {
+            isProcessing = false;
+        }
+
     }
 
     public void snapToGrid() {

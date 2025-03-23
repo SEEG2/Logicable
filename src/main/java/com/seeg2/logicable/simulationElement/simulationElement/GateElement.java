@@ -10,6 +10,8 @@ import static java.lang.Math.ceil;
 public abstract class GateElement extends SimulationElement {
     protected SceneElementConnectionPoint input1, input2, output;
     protected boolean cached1, cached2;
+    protected boolean isProcessing;
+
     protected GateElement(Pane screen) {
         super(screen);
     }
@@ -98,20 +100,41 @@ public abstract class GateElement extends SimulationElement {
     }
 
     public void pushValue() {
-        if (output.getConnection() != null) {
-            output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+        isProcessing = true;
+        try {
+            if (output.getConnection() != null) {
+                output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+            }
+        } finally {
+            isProcessing = false;
         }
     }
 
     protected void pushValue(ConnectionPoint source, boolean value) {
-        if (source == input1.getOtherConnectionPoint()) {
-            cached1 = value;
-        } else {
-            cached2 = value;
+        if (isProcessing) {
+            return;
         }
 
-        if (output.getConnection() != null) {
-            output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+
+        try {
+            isProcessing = true;
+            if (source == input1.getOtherConnectionPoint()) {
+                if (cached1 == value) {
+                    return;
+                }
+                cached1 = value;
+            } else {
+                if (cached2 == value) {
+                    return;
+                }
+                cached2 = value;
+            }
+
+            if (output.getConnection() != null) {
+                output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+            }
+        } finally {
+            isProcessing = false;
         }
     }
 

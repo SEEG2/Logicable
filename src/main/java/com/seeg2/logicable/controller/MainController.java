@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private static SimulationElement payload;
     private static SceneElement selectedElement;
-    private static boolean snapToGrid;
+    private static boolean snapToGrid = true;
     private final static ArrayList<SceneElement> sceneElements = new ArrayList<>();
     private final static ArrayList<ConnectionLine> connections = new ArrayList<>();
     private final static ArrayList<Line> gridLines = new ArrayList<>();
