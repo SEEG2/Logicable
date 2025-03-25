@@ -432,6 +432,9 @@ public class MainController implements Initializable {
     public void setPickedConnection(ConnectionPoint connectionPoint, boolean invert) {
         if (pickedConnection == null) {
             pickedConnection = connectionPoint;
+            if (connectionPoint.isInput()) { // If reversed line visual sucks, remove this if-statement (this will only have a graphical impact)
+                invert ^= true;
+            }
             connectionLineTemp = new ConnectionLine(pickedConnection, null, screen, true, invert);
             return;
         }
