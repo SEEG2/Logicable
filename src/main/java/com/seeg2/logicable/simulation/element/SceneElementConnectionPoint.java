@@ -1,45 +1,51 @@
-package com.seeg2.logicable.simulationElement.simulationElement;
+package com.seeg2.logicable.simulation.element;
 
 import com.seeg2.logicable.controller.MainController;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
-public class LineConnectionPoint implements ConnectionPoint {
+public class SceneElementConnectionPoint implements ConnectionPoint {
     private Pane screen;
     private SimulationElement root;
     private Circle boundCircle;
     // true -> input; false -> output
+    private boolean isInput;
     private ConnectionLine connection;
     private ConnectionPoint otherConnectionPoint;
-    private ConnectionLine origin;
 
-    public LineConnectionPoint(Pane screen, SimulationElement root, Line motherLine, ConnectionLine origin, float offsetXRatio, float offsetYRatio) {
+    public SceneElementConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset) {
+        this(screen, root, xOffset, yOffset, true);
+    }
+
+    public SceneElementConnectionPoint(Pane screen, SimulationElement root, float xOffset, float yOffset, boolean isInput) {
         this.screen = screen;
         this.root = root;
-        this.origin = origin;
+        this.isInput = isInput;
 
-        boundCircle = new Circle(9, Color.GREEN);
+        boundCircle = new Circle(9, Color.RED);
         boundCircle.setCursor(Cursor.CROSSHAIR);
 
         if (!MainController.isDebugMode()) {
             this.hide();
         }
 
-        boundCircle.centerXProperty().bind(
-                motherLine.startXProperty().add(
-                        motherLine.endXProperty().subtract(motherLine.startXProperty()).multiply(offsetXRatio)
-                )
-        );
-        boundCircle.centerYProperty().bind(motherLine.startYProperty().add(
-                        motherLine.endYProperty().subtract(motherLine.startYProperty()).multiply(offsetYRatio)
-                )
-        );
+        boundCircle.centerXProperty().bind(Bindings.add(root.getSprite().layoutXProperty(), xOffset));
+        boundCircle.centerYProperty().bind(Bindings.add(root.getSprite().layoutYProperty(), yOffset));
 
         boundCircle.setOnMouseClicked((action) -> {
-            this.remove();
+            if (!root.isActive) {
+                return;
+            }
+
+            if (!MainController.instance.isConnectionPicked() && this.connection != null) {
+                removeConnection();
+                return;
+            }
+            
+            MainController.instance.setPickedConnection(this, false);
             action.consume();
         });
 
@@ -49,10 +55,6 @@ public class LineConnectionPoint implements ConnectionPoint {
 
     public Circle getCircle() {
         return boundCircle;
-    }
-
-    public boolean isInput() {
-        return false;
     }
 
     public ConnectionLine getConnection() {
@@ -71,7 +73,6 @@ public class LineConnectionPoint implements ConnectionPoint {
     }
 
     public void remove() {
-        origin.removeLineConnectionPoint(this);
         screen.getChildren().remove(boundCircle);
 
         if (connection != null) {
@@ -79,21 +80,15 @@ public class LineConnectionPoint implements ConnectionPoint {
         }
     }
 
-    public void remove(boolean isHandled) {
-        if (isHandled) {
-            screen.getChildren().remove(boundCircle);
-
-            if (connection != null) {
-                connection.remove(this);
-            }
-            return;
+    public void removeConnection() {
+        if (connection != null) {
+            connection.remove();
         }
-
-        remove();
+        connection = null;
     }
 
-    public void removeConnection() {
-        remove();
+    public boolean isInput() {
+        return isInput;
     }
 
     public SimulationElement getRoot() {

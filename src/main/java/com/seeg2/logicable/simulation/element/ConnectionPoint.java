@@ -1,4 +1,4 @@
-package com.seeg2.logicable.simulationElement.simulationElement;
+package com.seeg2.logicable.simulation.element;
 
 import javafx.scene.shape.Circle;
 

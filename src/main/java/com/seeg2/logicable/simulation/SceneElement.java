@@ -1,4 +1,4 @@
-package com.seeg2.logicable.simulationElement;
+package com.seeg2.logicable.simulation;
 
 import com.seeg2.logicable.controller.MainController;
 import javafx.scene.Node;

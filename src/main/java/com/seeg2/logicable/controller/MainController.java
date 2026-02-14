@@ -2,8 +2,8 @@ package com.seeg2.logicable.controller;
 
 import com.seeg2.logicable.Application;
 import com.seeg2.logicable.logger.Logger;
-import com.seeg2.logicable.simulationElement.*;
-import com.seeg2.logicable.simulationElement.simulationElement.*;
+import com.seeg2.logicable.simulation.*;
+import com.seeg2.logicable.simulation.element.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -245,10 +245,10 @@ public class MainController implements Initializable {
     public void creditsClicked() throws IOException {
         Stage stage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("credits.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 360);
-        stage.setMinWidth(480);
+        Scene scene = new Scene(fxmlLoader.load(), 320, 360);
+        stage.setMinWidth(240);
         stage.setMinHeight(270);
-        stage.setTitle("credits");
+        stage.setTitle("Credits");
         stage.setScene(scene);
         stage.show();
     }

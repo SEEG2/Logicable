@@ -1,4 +1,4 @@
-package com.seeg2.logicable.simulationElement.simulationElement;
+package com.seeg2.logicable.simulation.element;
 
 import com.seeg2.logicable.controller.MainController;
 import javafx.scene.Cursor;

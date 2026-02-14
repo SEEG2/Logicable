@@ -1,36 +1,34 @@
-package com.seeg2.logicable.simulationElement.simulationElement;
+package com.seeg2.logicable.simulation.element;
 
 import com.seeg2.logicable.controller.MainController;
+import com.seeg2.logicable.logger.Logger;
 import javafx.scene.Cursor;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import static com.seeg2.logicable.controller.MainController.gridSize;
-import static java.lang.Math.ceil;
 
-public abstract class GateElement extends SimulationElement {
-    protected SceneElementConnectionPoint input1, input2, output;
-    protected boolean cached1, cached2;
-    protected boolean isProcessing;
+// TODO  rework this (just a place holder right now)
+public class NOTElement extends SimulationElement {
+    private SceneElementConnectionPoint input, output;
+    private boolean cached;
+    private boolean isProcessing;
 
-    protected GateElement(Pane screen) {
+    public NOTElement(Pane screen) {
         super(screen);
-    }
+        this.SPRITE = new ImageView();
 
-    public void setPosition(double x, double y) {
-        if (MainController.shouldSnapToGrid()) {
-            x = Math.round(x / gridSize) * gridSize;
-            y = Math.round(y / gridSize) * gridSize;
+        try {
+            SPRITE.setImage(new Image(getClass().getResource("/images/logic_gates/NOT.png").toExternalForm()));
+        } catch (Exception e) {
+            Logger.error("Failed to load NOT-sprite");
         }
 
-        SPRITE.setLayoutX(x);
-        SPRITE.setLayoutY(y);
-
-        input1.update();
-        input2.update();
-        output.update();
+        initSprite();
     }
 
-    protected void initSprite() {
+    private void initSprite() {
         isActive = false;
         SPRITE.setPreserveRatio(true);
         SPRITE.setFitHeight(60);
@@ -39,11 +37,7 @@ public abstract class GateElement extends SimulationElement {
 
         float centerLineY = (float) (SPRITE.getFitHeight() / 2f);
 
-        // Position of the connector relative to the center line. Based on the images used.
-        float inputOffsetY = (float) ceil(SPRITE.getFitHeight() / 3.2f); // If this is not a full pixel the lines will look weird
-
-        input1 = new SceneElementConnectionPoint(screen, this, 0, centerLineY + inputOffsetY);
-        input2 = new SceneElementConnectionPoint(screen, this, 0, centerLineY - inputOffsetY);
+        input = new SceneElementConnectionPoint(screen, this, 0, centerLineY);
         output = new SceneElementConnectionPoint(screen, this, (float) SPRITE.getBoundsInLocal().getWidth(), centerLineY, false);
 
         SPRITE.setOnMouseClicked((action) -> {
@@ -79,73 +73,73 @@ public abstract class GateElement extends SimulationElement {
         });
     }
 
-    public void remove() {
-        screen.getChildren().remove(SPRITE);
+    public void setPosition(double x, double y) {
+        if (MainController.shouldSnapToGrid()) {
+            x = Math.round(x / gridSize) * gridSize;
+            y = Math.round(y / gridSize) * gridSize;
+        }
 
-        input1.remove();
-        input2.remove();
-        output.remove();
+        SPRITE.setLayoutX(x);
+        SPRITE.setLayoutY(y);
+
+        input.update();
+        output.update();
     }
 
     public void debugOn() {
-        input1.show();
-        input2.show();
+        input.show();
         output.show();
     }
 
     public void debugOff() {
-        input1.hide();
-        input2.hide();
+        input.hide();
         output.hide();
+    }
+
+    public void remove() {
+        screen.getChildren().remove(SPRITE);
+
+        input.remove();
+        output.remove();
     }
 
     public void pushValue() {
         isProcessing = true;
+
         try {
             if (output.getConnection() != null) {
-                output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+                output.getConnection().pushValue(output, !cached);
             }
         } finally {
             isProcessing = false;
         }
     }
 
-    protected void pushValue(ConnectionPoint source, boolean value) {
+    public void pushValue(ConnectionPoint source, boolean value) {
         if (isProcessing) {
             return;
         }
 
-
         try {
             isProcessing = true;
-            if (source == input1.getOtherConnectionPoint()) {
-                if (cached1 == value) {
-                    return;
-                }
-                cached1 = value;
-            } else {
-                if (cached2 == value) {
-                    return;
-                }
-                cached2 = value;
+            if (cached == value) {
+                return;
             }
-
+            cached = value;
             if (output.getConnection() != null) {
-                output.getConnection().pushValue(output, calcValueForInputs(cached1, cached2));
+                output.getConnection().pushValue(output, !cached);
             }
         } finally {
             isProcessing = false;
         }
+
     }
 
     public void snapToGrid() {
         SPRITE.setLayoutX(Math.round(SPRITE.getLayoutX() / gridSize) * gridSize);
         SPRITE.setLayoutY(Math.round(SPRITE.getLayoutY() / gridSize) * gridSize);
 
-        input1.update();
-        input2.update();
+        input.update();
         output.update();
     }
-
-    protected abstract boolean calcValueForInputs(boolean value1, boolean value2);
 }

@@ -1,8 +1,8 @@
-package com.seeg2.logicable.simulationElement.simulationElement;
+package com.seeg2.logicable.simulation.element;
 
 import com.seeg2.logicable.controller.MainController;
 import com.seeg2.logicable.logger.Logger;
-import com.seeg2.logicable.simulationElement.SceneElement;
+import com.seeg2.logicable.simulation.SceneElement;
 import javafx.scene.Cursor;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.ColorAdjust;
